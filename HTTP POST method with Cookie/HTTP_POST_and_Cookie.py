@@ -29,7 +29,8 @@ def handleRequest(conn):
         header[key] = value
     
 
-    #//TODO: get cookie information
+    #//TODO: get cookie information from Browser
+    # even if connection is closed or browser tab is closed
     cookies={}
     if 'Cookie' in header:
         pairs = header['Cookie'].split(';')
