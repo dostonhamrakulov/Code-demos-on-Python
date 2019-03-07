@@ -23,4 +23,4 @@ Here, we will generate QR Code with pyqrcode package and save the result into sv
 
 
 **The result here**
-<img width="450px" height="450px" src="https://github.com/dostonhamrakulov/Colored-Tiles-Game/blob/master/Images/images_3.PNG" />
+<img width="450px" height="450px" src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/QR_Code_generator_in_Python/idostoncom.svg" />
