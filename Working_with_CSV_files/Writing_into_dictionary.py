@@ -1,4 +1,3 @@
-# importing the csv module
 import csv
 
 # field names
@@ -12,7 +11,7 @@ rows = [['Nikhil', 'COE', '2', '9.0'],
         ['Prateek', 'MCE', '3', '7.8'],
         ['Sahil', 'EP', '2', '9.1']]
 
-# name of csv file
+# name of csv filel, if the file doesnt exist, the file will be created before writing into it.
 filename = "university_records.csv"
 
 # writing to csv file
