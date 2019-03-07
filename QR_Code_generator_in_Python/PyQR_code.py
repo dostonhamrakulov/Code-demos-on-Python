@@ -1,6 +1,4 @@
 import pyqrcode
-from pyqrcode import QRCode
-
 
 # String to represent the QR code
 str_ = "http://idoston.com/python-development"
