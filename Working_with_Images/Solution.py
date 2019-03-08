@@ -7,15 +7,33 @@ try:
         #2. retrieving information about image
         width, height = image.size
 
-        # Rotating image with given angle
+        print("---------------- Image infor ---------------")
+        print("Width: " + str(width))
+        print("Height: " + str(height))
+
+        print("---------------- Rotating image ---------------")
+        #3. Rotating image with given angle
         img = image.rotate(180)
 
-        # Saved in the same relative location
+        #4. Saved in the same relative location
         img.save("rotated_picture.png")
+
+        print("---------------- Cropping image ---------------")
+        #5. Cropping the image
+        area = (0, 0, width / 2, height / 2)
+        img = image.crop(area)
+
+        # Saved in the same relative location
+        img.save("cropped_picture.png")
+
+        #6. Resizing image
+        img = img.resize((width / 2, height / 2))
+
+        # Saved in the same relative location
+        img.save("resized_picture.png")
+
+
 except IOError:
     pass
 
-print("Width: " + str(width))
-print("Height: " + str(height))
 
-#3.
