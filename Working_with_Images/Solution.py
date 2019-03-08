@@ -11,7 +11,7 @@ try:
         img = image.rotate(180)
 
         # Saved in the same relative location
-        img.save("rotated_picture.jpg")
+        img.save("rotated_picture.png")
 except IOError:
     pass
 

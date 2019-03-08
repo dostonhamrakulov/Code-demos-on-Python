@@ -14,7 +14,7 @@
     <SUITE FILE_PATH="coverage/Code$PyQR_code__1_.coverage" NAME="PyQR_code (1) Coverage Results" MODIFIED="1551950582146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/QR_Code_generator_in_Python" />
     <SUITE FILE_PATH="coverage/Code$Read_CSV_file.coverage" NAME="Read_CSV_file Coverage Results" MODIFIED="1551992132100" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Working_with_CSV_files" />
     <SUITE FILE_PATH="coverage/Code$PyQR_code.coverage" NAME="PyQR_code Coverage Results" MODIFIED="1551950002878" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Code$Solution.coverage" NAME="Solution Coverage Results" MODIFIED="1552063393047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Working_with_Images" />
+    <SUITE FILE_PATH="coverage/Code$Solution.coverage" NAME="Solution Coverage Results" MODIFIED="1552063442647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Working_with_Images" />
     <SUITE FILE_PATH="coverage/Code$Writing_into_dictionary.coverage" NAME="Writing_into_dictionary Coverage Results" MODIFIED="1551992225451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Working_with_CSV_files" />
   </component>
   <component name="FileEditorManager">
@@ -49,8 +49,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Working_with_Images/Solution.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+            <state relative-caret-position="195">
+              <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -260,12 +260,12 @@
       <option name="presentableId" value="Default" />
       <updated>1551949302069</updated>
       <workItem from="1551949303541" duration="5761000" />
-      <workItem from="1552062589740" duration="658000" />
+      <workItem from="1552062589740" duration="850000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6419000" />
+    <option name="totallyTimeSpent" value="6611000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="48" y="32" width="1318" height="736" extended-state="6" />
@@ -276,7 +276,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.23793676" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24459234" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -325,8 +325,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Working_with_Images/Solution.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+        <state relative-caret-position="195">
+          <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
         </state>
       </provider>
     </entry>
