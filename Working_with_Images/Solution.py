@@ -26,11 +26,19 @@ try:
         # Saved in the same relative location
         img.save("cropped_picture.png")
 
+        print("---------------- Resizing image ---------------")
         #6. Resizing image
         img = img.resize((width / 2, height / 2))
 
         # Saved in the same relative location
         img.save("resized_picture.png")
+
+        print("---------------- Creating a thumbnail ---------------")
+        #7.  In-place modification
+        image.thumbnail((200, 200))
+
+        # Saved in the same relative location
+        image.save("thumb.png")
 
 
 except IOError:
