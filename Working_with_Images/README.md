@@ -10,12 +10,12 @@
 In order to make operation on images, we need to install PIL library
 * Linux
 ```[code]
-// pip install Pillow
-// 
-// or install pip first
-// 
-// sudo apt-get update
-// sudo apt-get install python-pip
+pip install Pillow
+
+or install pip first
+ 
+sudo apt-get update
+sudo apt-get install python-pip
 ```
 
 **Operation done here**
@@ -24,17 +24,18 @@ In order to make operation on images, we need to install PIL library
 * Save changes in image
 * Rotating image
 * Cropping image
+* Creating a thumbnail
 
 
 
 ### Programming languages and frameworks
 ```[Python]
-// Python
+Python
 ```
 
 ### IDE
 ```[Vim]
-// Vim
+Vim
 ```
 
 ## Author
