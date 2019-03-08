@@ -18,6 +18,12 @@ In order to make operation on images, we need to install PIL library
 // sudo apt-get install python-pip
 ```
 
+**Operation done here**
+* Open image from specific path
+* Retrieving image information like size of the image
+* Save changes in image
+* Rotating image
+* Cropping image
 
 
 
