@@ -9,12 +9,12 @@ Here, we will generate QR Code with pyqrcode package and save the result into sv
 
 ### Programming languages and frameworks
 ```[Python]
-// Python
+Python
 ```
 
 ### IDE
 ```[Vim]
-// Vim
+Vim
 ```
 
 ## Author
@@ -24,3 +24,6 @@ Here, we will generate QR Code with pyqrcode package and save the result into sv
 
 **The result here**
 <img width="450px" height="450px" src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/QR_Code_generator_in_Python/idostoncom.svg" />
+
+
+**Enjoy open-source community**

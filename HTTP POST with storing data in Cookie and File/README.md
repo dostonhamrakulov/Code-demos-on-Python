@@ -12,14 +12,16 @@ This script offers an HTTP-Server based on TCP-Sockets at the port 5000. When vi
 
 ### Programming languages and frameworks
 ```[Python]
-// Python
+Python
 ```
 
 ### IDE
 ```[Vim]
-// Vim
+Vim
 ```
 
 ## Author
 **Doston Hamrakulov**
 >*Software Engineer, Web Developer, Freelancer*
+
+**Enjoy open-source community**
