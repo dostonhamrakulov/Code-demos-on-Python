@@ -1,30 +1,25 @@
-# Working with Images in Python
+# Working with PDF files in Python
 
-### Description:
-* Opening images from specific path
-* Retrieving image sizes 
-* Rotating image
+**Operation done here**
+* Extracting document information (title, author, …)
+* Splitting documents page by page
+* Merging documents page by page
+* Cropping pages
+* Merging multiple pages into a single page
+* Encrypting and decrypting PDF files
 
 
 ### Requirements
-In order to make operation on images, we need to install PIL library
+In order to make operation on images, we need to install PyPDF2 library
 * Linux
 ```[code]
-pip install Pillow
+pip install PyPDF2
 
 or install pip first
  
 sudo apt-get update
 sudo apt-get install python-pip
 ```
-
-**Operation done here**
-* Open image from specific path
-* Retrieving image information like size of the image
-* Save changes in image
-* Rotating image
-* Cropping image
-* Creating a thumbnail
 
 
 
