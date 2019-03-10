@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8ded4b5c-f604-4e5a-9a2f-78927fc3df66" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Downloading_files_from_web_in_Python/Solution.py" beforeDir="false" afterPath="$PROJECT_DIR$/Downloading_files_from_web_in_Python/Solution.py" afterDir="false" />
-    </list>
+    <list default="true" id="8ded4b5c-f604-4e5a-9a2f-78927fc3df66" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -322,23 +320,23 @@
       <workItem from="1551949303541" duration="5761000" />
       <workItem from="1552062589740" duration="1946000" />
       <workItem from="1552130725467" duration="2882000" />
-      <workItem from="1552244219626" duration="1410000" />
+      <workItem from="1552244219626" duration="1686000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11999000" />
+    <option name="totallyTimeSpent" value="12275000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="58" y="32" width="1308" height="736" extended-state="6" />
+    <frame x="48" y="32" width="1318" height="736" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25990492" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25786164" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22129783" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.22129783" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
