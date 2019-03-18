@@ -10,11 +10,19 @@ The **subprocess** module provides more powerful facilities for spawning new pro
 The **commands** module has been removed in Python 3. Use the **subprocess** module instead.
 
 
+### Documentation to read:
+* [commands module till python 2.6](https://docs.python.org/2/library/commands.html)
+* [subprocess module for python 3.x](https://docs.python.org/2/library/subprocess.html#module-subprocess)
 
-
-### Somecode:
+### commands module:
 ```python
-code
+import commands
+
+output = commands.getoutput('ls')
+print(output)
+
+num = output.count('d')
+print("Number: ", num)
 
 ```
 
