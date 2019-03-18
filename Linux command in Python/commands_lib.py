@@ -12,3 +12,6 @@ soe = commands.getstatusoutput('ifconfig')
 print("=========================================")
 print(soe)
 
+
+# More info:
+# https://docs.python.org/2/library/commands.html
