@@ -20,3 +20,4 @@ clean += Alice | Bob
 solvers.mip.solve(S,msg=1)
 print(S.solution())
 
+plotters.matplotlib.plot(S,img_filename='household.png')
