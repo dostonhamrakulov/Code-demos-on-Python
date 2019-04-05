@@ -5,111 +5,109 @@
 *2018/07/14*
 <br>
 
-## :black_nib: 前言 <br>
+## :black_nib: Foreword <br>
 
-這裡要來說明如何運用 GA 來求解 flow shop 的問題，以下將先對 flow shop 問題做個簡介，接著描述本範例的求解問題以及編碼原則說明，最後會根據每個程式區塊進行概念上的講解
+Here to explain how to use GA to solve the flow shop problem, the following will first introduce the flow shop problem, then describe the solution problem and coding principle description of this example, and finally explain the concept according to each program block.
 
-### :arrow_down_small: 什麼是 flow shop 問題? <br>
+### :arrow_down_small: What is a flow shop problem? <br>
 
-簡單來說，flow shop 問題就是有 n 個工件以及 m 台機台，每個工件在機台的加工順序都一樣，如下圖所示，工件1先進入機台1加工，再到機台2加工，而工件2跟隨著工件1的腳步，按照同樣的機台順序加工，其他工件以此類推。
-
-<br>
-<div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/1.png" width="450" height="180">
-</div>
-<br>
-
-因此假設現在有3個工件2台機台，每個工件在每台機台的加工時間，如左下圖所示，工件的加工順序為先到機台A加工再到機台B，假設得到的排程結果為<br>
-Job 1->Job 2->Job 3，因此可得到如右下圖的甘特圖
+To put it simply, the flow shop problem is that there are n workpieces and m machines. The order of processing of each workpiece on the machine is the same. As shown in the figure below, the workpiece 1 first enters the machine 1 and then the machine 2 And the workpiece 2 follows the step of the workpiece 1, and is processed in the same machine sequence, and the other workpieces are deduced by analogy.
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/2.png" width="570" height="250">
+<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/1 .png" width="450" ​​height="180">
 </div>
 <br>
 
-## :black_nib: 問題描述 <br>
-本範例是一個具有20個工件的單機台 flow shop 問題，排程目標為**最小化總加權延遲 (Total weighted tardiness)** ，工件資訊如下圖所示
+Therefore, it is assumed that there are 3 workpieces and 2 machines, and the processing time of each workpiece in each machine is as shown in the lower left figure. The processing order of the workpiece is first to machine A and then to machine B, assuming that The result of the schedule is <br>
+Job 1->Job 2->Job 3, so you can get the Gantt chart as shown in the lower right figure.
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/3.png" width="650" height="180">
+<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/2 .png" width="570" height="250">
 </div>
 <br>
 
-### :arrow_down_small: 排程目標 <br>
-由於本範例的目標為最小化總加權延遲 (Total weighted tardiness)，因此除了必須知道每個工件在每台機台上的加工時間外，還必須知道每個工件的到期日及權重。<br>
+## :black_nib: Description of the problem <br>
+This example is a single-machine flow shop problem with 20 workpieces. The scheduling goal is **Total weighted tardiness**. The workpiece information is shown below.
 
-:bulb: 總加權延遲時間的公式如下：<br>
+<br>
+<div align=center>
+<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/3 .png" width="650" height="180">
+</div>
+<br>
 
-<c<sub>i</sup></sub>：工件 i 的完工時間 (Completion time)、d<sub>i</sup></sub>：工件 i 的到期日 (Due date)、T<sub>i</sup></sub>：工件 i 的延遲時間 (Tardiness time)、<br>
-w<sub>i</sup></sub>：工件 i 的權重(Weight) >
-- 首先計算每個工件的延遲時間，如果提早做完，則延遲時間為0 <br>
+### :arrow_down_small: Schedule Targets <br>
+Since the goal of this example is to minimize total weighted tardiness, in addition to having to know the processing time of each workpiece on each machine, the due date and weight of each workpiece must be known. <br>
+
+:bulb: The formula for the total weighted delay time is as follows:<br>
+
+<c<sub>i</sup></sub>: Completion time of the workpiece i, d<sub>i</sup></sub>: the due date of the workpiece i (Due date), T<sub>i</sup></sub>: Tardiness time of workpiece i, <br>
+w<sub>i</sup></sub>: Weight of artifact i >
+- Calculate the delay time of each workpiece first. If it is done early, the delay time is 0 <br>
 
 **T<sub>i</sup></sub> = max {0,c<sub>i</sup></sub> - d<sub>i</sup></sub>}**
 
-- 計算所有工件的加權延遲時間總和，從公式我們可以知道，當工件的權重越大，我們要盡可能的準時完成那些權重較大的工件，不然會導致總加權延遲時間太大，對於這樣的排程目標問題來說，這就不是一個好的排程
+- Calculate the sum of the weighted delay times of all the workpieces. From the formula we can know that when the weight of the workpiece is larger, we should complete those workpieces with larger weights as soon as possible, otherwise the total weighted delay time will be too large. In terms of scheduling goals, this is not a good schedule.
 
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/4.png" width="80" height="60">
+<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/4 .png" width="80" height="60">
 
-另外，這裡還有提供另一個版本的 flow shop 程式，跟本文主要的差別在於求解目標的不同，另一版本的目標為最小化總閒置時間 (Idle time)，也就是上面範例甘特圖中，灰色區域的部分，期望排出來的排程，可以盡可能減少總機台的閒置時間。
+In addition, there is another version of the flow shop program. The main difference with this article is the difference in the solution target. The other version aims to minimize the total idle time (Idle time), which is the example Gantt chart above. The part of the gray area, which is expected to be discharged, can minimize the idle time of the main machine.
 
+### :arrow_down_small: Coding Principles <br>
 
-### :arrow_down_small: 編碼原則  <br>
+The coding method here is very simple. Each chromosome represents a set of scheduling results. Therefore, if there are five workpieces in the flow shop problem, each chromosome is composed of five genes, each gene is Representing an artifact, in the program, each chromosome is stored via a list, as shown below:<br>
 
-這裡的編碼方式很簡單，每個染色體就表示一組排程結果，因此，如果 flow shop 的問題中，共有五個工件要排，則每個染色體就由五個基因所組成，每個基因即代表某個工件，在程式裡，會透過 list 來儲存每個染色體，如下面所示：<br>
-
-chromosome 1 => [0,1,2,3,4] <br>
-chromosome 2 => [1,2,0,3,4] <br>
-chromosome 2 => [4,2,0,1,3] <br>
+Chromosome 1 => [0,1,2,3,4] <br>
+Chromosome 2 => [1,2,0,3,4] <br>
+Chromosome 2 => [4,2,0,1,3] <br>
 ........<br>
 
-## :black_nib: 程式說明 <br>
+## :black_nib: Program Description <br>
 
-這裡主要針對程式中幾個重要區塊來說明，有些細節並無放入，如有需要請參考[完整程式碼](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/GA_flowshop_tardyjob.py)或[範例檔案]((https://wurmen.github.io/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/Example.html))
+This is mainly for the important blocks in the program. Some details are not included. Please refer to [Complete Code] if necessary (https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop -Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/GA_flowshop_tardyjob.py) or [sample file] ((https://wurmen.github.io/Genetic-Algorithm-for- Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/Example.html))
 
-### :arrow_down_small: 導入所需套件 <br>
+### :arrow_down_small: Import the required kits <br>
 
 ```python
 # importing required modules
-import numpy as np
-import time
-import copy
+Import numpy as np
+Import time
+Import copy
 ```
 
-### :arrow_down_small: 初始設定 <br>
-此區主要包含讀檔或是資料給定，以及一些參數上的設定
+### :arrow_down_small: Initial Settings <br>
+This area mainly contains reading files or data settings, as well as some parameter settings.
 ```python
-''' ================= initialization setting ======================'''
-num_job=20 # number of jobs
+''' ================= initialization setting =========================
+Num_job=20 # number of jobs
 
-p=[10,10,13,4,9,4,8,15,7,1,9,3,15,9,11,6,5,14,18,3]
+p = [10, 10, 13, 4, 9, 4, 8, 15, 7, 1, 9, 3, 15, 9, 11, 6, 5, 14, 18, 3]
 d=[50,38,49,12,20,105,73,45,6,64,15,6,92,43,78,21,15,50,150,99]
 w=[10,5,1,5,10,1,5,10,5,1,5,10,10,5,1,10,5,5,1,5]
 # raw_input is used in python 2
-population_size=int(input('Please input the size of population: ') or 30) # default value is 30
-crossover_rate=float(input('Please input the size of Crossover Rate: ') or 0.8) # default value is 0.8
-mutation_rate=float(input('Please input the size of Mutation Rate: ') or 0.1) # default value is 0.1
-mutation_selection_rate=float(input('Please input the mutation selection rate: ') or 0.5)
-num_mutation_jobs=round(num_job*mutation_selection_rate)
-num_iteration=int(input('Please input number of iteration: ') or 2000) # default value is 2000
+Population_size=int(input('Please input the size of population: ') or 30) # default value is 30
+Crossover_rate=float(input('Please input the size of Crossover Rate: ') or 0.8) # default value is 0.8
+Mutation_rate=float(input('Please input the size of Mutation Rate: ') or 0.1) # default value is 0.1
+Mutation_selection_rate=float(input('Please input the mutation selection rate: ') or 0.5)
+Num_mutation_jobs=round(num_job*mutation_selection_rate)
+Num_iteration=int(input('Please input number of iteration: ') or 2000) # default value is 2000
 
 
-start_time = time.time()
+Start_time = time.time()
 
 ```
 
-### :arrow_down_small: 產生初始解 <br>
-根據上述所設定的族群大小，透過隨機的方式，產生初始族群
+### :arrow_down_small: Generate initial solution <br>
+According to the size of the above-mentioned group, the initial group is generated in a random manner.
 ```python
 '''----- generate initial population -----'''
 Tbest=999999999999999
-best_list,best_obj=[],[]
-population_list=[]
-for i in range(population_size):
-    random_num=list(np.random.permutation(num_job)) # generate a random permutation of 0 to num_job-1
-    population_list.append(nxm_random_num) # add to the population_list2.
-
+Best_list, best_obj=[],[]
+Population_list=[]
+For i in range(population_size):
+    Random_num=list(np.random.permutation(num_job)) # generate a random permutation of 0 to num_job-1
+    Population_list.append(nxm_random_num) # add to the population_list2.
 ```
 
 ### :arrow_down_small: 交配 <br>
@@ -239,19 +237,105 @@ for i in range(population_size):
         if job_sequence_ptime>d[sequence_best[k]]:
             num_tardy=num_tardy+1
 ```
+### :arrow_down_small: Mutant <br>
+This method is to mutate by means of gene displacement, and the mutation method is as follows:<br>
+1. According to the mutation selection rate, determine how many genes in the chromosome are to be mutated. If there are six genes per chromosome and the mutation selection rate is 0.5, then 3 genes will be mutated.
+2. Randomly select the gene to be displaced, assuming 5, 2, 6 are selected (here, the gene at this position is to be mutated)
+3. Perform gene transfer and transfer as shown.
+<br>
+<div align=center>
+<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6 .png" width="450" ​​height="250">
+</div>
+<br>
 
-### :arrow_down_small: 結果 <br>
-等所有迭代次數結束後，會輸出在所有迭代中找到的最好排程結果 (sequence_best)、它的總加權延遲時間、每個工件平均加權延遲時間、有多少工件延遲以及程式執行時間
 ```python
-'''----------result----------'''
-print("optimal sequence",sequence_best)
-print("optimal value:%f"%Tbest)
-print("average tardiness:%f"%(Tbest/num_job))
-print("number of tardy:%d"%num_tardy)
-print('the elapsed time:%s'% (time.time() - start_time))
+'''--------mutatuon--------'''
+    For m in range(len(offspring_list)):
+        Mutation_prob=np.random.rand()
+        If mutation_rate >= mutation_prob:
+            M_chg=list(np.random.choice(num_job, num_mutation_jobs, replace=False)) # chooses the position to mutation
+            T_value_last=offspring_list[m][m_chg[0]] # save the value which is on the first mutation position
+            For i in range(num_mutation_jobs-1):
+                Offspring_list[m][m_chg[i]]=offspring_list[m][m_chg[i+1]] # displacement
+            
+            Offspring_list[m][m_chg[num_mutation_jobs-1]]=t_value_last # move the value of the first mutation position to the last mutation position
+```
+### :arrow_down_small: Adaptive Value Calculation <br>
+Calculate the total weighted delay for each chromosome, which is the result of each schedule, and record it for comparison in subsequent selections.
+```python
+    '''--------fitness value(calculate tardiness)-------------'''
+    Total_chromosome=copy.deepcopy(parent_list)+copy.deepcopy(offspring_list) # parent and offspring chromosomes combination
+    Chrom_fitness,chrom_fit=[],[]
+    Total_fitness=0
+    For i in range(population_size*2):
+        Ptime=0
+        Tardiness=0
+        For j in range(num_job):
+            Ptime=ptime+p[total_chromosome[i][j]]
+            Tardiness=tardiness+w[total_chromosome[i][j]]*max(ptime-d[total_chromosome[i][j]],0)
+        Chrom_fitness.append(1/tardiness)
+        Chrom_fit.append(tardiness)
+        Total_fitness=total_fitness+chrom_fitness[i]
 ```
 
-### :arrow_down_small: 甘特圖 <br>
+### :arrow_down_small: Select <br>
+Here, the Roulette wheel selection mechanism is adopted.
+```python
+    '''----------selection----------'''
+    Pk,qk=[],[]
+    
+    For i in range(population_size*2):
+        Pk.append(chrom_fitness[i]/total_fitness)
+    For i in range(population_size*2):
+        Cumulative=0
+        For j in range(0,i+1):
+            Cumulative=cumulative+pk[j]
+        Qk.append(cumulative)
+    
+    Selection_rand=[np.random.rand() for i in range(population_size)]
+    
+    For i in range(population_size):
+        If selection_rand[i]<=qk[0]:
+Population_list[i]=copy.deepcopy(total_chromosome[0])
+        Else:
+            For j in range(0,population_size*2-1):
+                If selection_rand[i]>qk[j] and selection_rand[i]<=qk[j+1]:
+Population_list[i]=copy.deepcopy(total_chromosome[j+1])
+                    Break
+```
+
+### :arrow_down_small: Compare <br>
+First compare the total weighted delay (chrom_fit) of each chromosome, select the best solution found in this round (Tbest_now), and then compare it with the best solution (Tbest) found so far, once the solution of this round is found so far The solution is better, replace Tbest and record the result of the solution.
+```python
+    '''----------comparison----------'''
+    For i in range(population_size*2):
+        If chrom_fit[i]<Tbest_now:
+            Tbest_now=chrom_fit[i]
+Sequence_now=copy.deepcopy(total_chromosome[i])
+    
+    If Tbest_now<=Tbest:
+        Tbest=Tbest_now
+Sequence_best=copy.deepcopy(sequence_now)
+    
+    Job_sequence_ptime=0
+    Num_tardy=0
+    For k in range(num_job):
+        Job_sequence_ptime=job_sequence_ptime+p[sequence_best[k]]
+        If job_sequence_ptime>d[sequence_best[k]]:
+            Num_tardy=num_tardy+1
+```
+### :arrow_down_small: Results <br>
+After the end of all iterations, the best schedule result (sequence_best) found in all iterations, its total weighted delay time, average weighted delay time per workpiece, how many workpiece delays, and program execution time are output.
+```python
+'''----------result----------'''
+Print("optimal sequence",sequence_best)
+Print("optimal value:%f"%Tbest)
+Print("average tardiness:%f"%(Tbest/num_job))
+Print("number of tardy:%d"%num_tardy)
+Print('the elapsed time:%s'% (time.time() - start_time))
+```
+
+### :arrow_down_small: Gantt Chart <br>
 ```python
 '''--------plot gantt chart-------'''
 import pandas as pd

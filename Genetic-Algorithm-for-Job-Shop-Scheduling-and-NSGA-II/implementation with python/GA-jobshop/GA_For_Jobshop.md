@@ -5,131 +5,130 @@
 *2018/12/01*
 <br>
 
-## :black_nib: 前言 <br>
+## :black_nib: Foreword <br>
 
-這裡要來說明如何運用 GA 來求解 Job shop 的問題，以下將先對 Job shop 問題做個簡介，接著描述本範例的求解問題以及編碼與解碼說明，最後會根據每個程式區塊進行概念上的講解
+Here to explain how to use GA to solve the Job shop problem, the following will first introduce the Job shop problem, then describe the solution problem and coding and decoding instructions of this example, and finally conceptually according to each program block. explain
 
-### :arrow_down_small: 什麼是 Job shop 問題? <br>
+### :arrow_down_small: What is a Job shop problem? <br>
 
-Jop shop 問題與 Flow shop 問題最大的不同在於，不像 Flow shop 問題中，每個工件在機台的加工順序都是相同的，在 Job shop 問題裡，每個工件都有屬於自己的機台加工順序，如下圖所示：<br>
-此為一個3x3的 Job shop 問題
+The biggest difference between the Jop shop problem and the Flow shop problem is that, unlike the Flow shop problem, the order of processing each workpiece on the machine is the same. In the Job shop problem, each workpiece has its own machine processing. The order is as shown below:<br>
+This is a 3x3 Job shop problem
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/1.png" width="650" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/1 .png" width="650" height="250">
 </div>
 <br>
 
-## :black_nib: 問題描述 <br>
-本範例是一個 10x10 的 Job shop 問題，共有10個工件與10台機台，每個工件在每台機台的加工順序都不同，排程目標為最小化總完工時間 (Makespan) ，資料是以工件的加工作業順序來呈現，每個工件都會經過10個加工作業，下表紀錄著每個工件在每一個加工作業的加工機台以及加工所需時間<br>
+## :black_nib: Description of the problem <br>
+This example is a 10x10 Job shop problem with 10 workpieces and 10 machines. Each workpiece has a different processing order on each machine. The scheduling goal is to minimize the total completion time (Makespan). The machining sequence of the workpiece is presented in sequence, and each workpiece passes through 10 machining operations. The following table records the processing machine for each workpiece in each machining operation and the processing time required <br>
 
-- Processing time  
+- Processing time
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/2.png" width="650" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/2 .png" width="650" height="300">
 </div>
 <br>
 <br>
 
-- Machine sequence 
+- Machine sequence
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/3.png" width="650" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/3 .png" width="650" height="300">
 </div>
 <br>
 
-### :arrow_down_small: 排程目標 <br>
-本範例的目標為最小化總完工時間 (Makespan)，也就是說要最小化整個排程的執行時間，以前面的例子為例，該範例的完工時間是 Job 3 在機台1的完工時間點，因為對於此排程結果來說，Job 3 是所有工件中，最後一個完成的，因此此排程的完工時間，就是Job 3 完成的時間點
+### :arrow_down_small: Schedule Targets <br>
+The goal of this example is to minimize the total completion time (Makespan), that is, to minimize the execution time of the entire schedule. Take the previous example as an example. The completion time of this example is the completion time of Job 3 at machine 1. Because Job 3 is the last one of all artifacts for this schedule result, so the completion time of this schedule is the point in time when Job 3 is completed.
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/4.png" width="450" height="180">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/4 .png" width="450" ​​height="180">
 </div>
 <br>
 
-### :arrow_down_small: 編碼與解碼  <br>
-這裡主要參考 [Gen-Tsujimura-Kubota’s Method (1994, 1997)](https://ieeexplore.ieee.org/document/400072/)所提出的 Job shop 排程問題的染色體編碼方式。<br>
+### :arrow_down_small: Encoding and Decoding <br>
+Here, the chromosomal coding method of the Job shop scheduling problem proposed by [Gen-Tsujimura-Kubota's Method (1994, 1997)] (https://ieeexplore.ieee.org/document/400072/) is mainly referred to. <br>
 
-此方法的概念是將染色體表示為一組工件的作業加工順序，一個基因代表一個工件的加工作業，根據工件在染色體出現的次數，來得知各個工件目前的加工作業，再來對應各工件的加工機台及加工時間，藉此來進行排程。<br>
+The concept of this method is to represent the chromosome as the processing sequence of a set of workpieces. One gene represents the processing of a workpiece. According to the number of times the workpiece appears on the chromosome, the current processing of each workpiece is known, and then the processing of each workpiece is processed. The machine and processing time are used to schedule. <br>
 
-假設現在有一個具有 N 個工件 M 台機台的 Job shop 排程問題，那一個染色體將會由 N x M 個基因所組成，因為每個工件在每台機台只會被加工一次，共要被 M 台機台加工，所以每個工件在染色體裡將會出現 M 次，這裡舉上面3 x 3的 Job shop 問題為例 <br>
+Suppose now that there is a job shop scheduling problem with N workpieces M machines, that one chromosome will be composed of N x M genes, because each workpiece will only be processed once per machine. It is processed by the M machine, so each workpiece will appear M times in the chromosome. Here is an example of the 3 x 3 Job shop problem.<br>
 
-O<sub>ijk</sup></sub> 表示工件 i 在作業程序 j 使用第 k 台機台 
+O<sub>ijk</sup></sub> means the workpiece i uses the kth machine in the job program j
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/5.png" width="780" height="420">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/5 .png" width="780" height="420">
 </div>
 <br>
 
+## :black_nib: Program Description <br>
 
-## :black_nib: 程式說明 <br>
+This is mainly for the important blocks in the program. Some details are not included. Please refer to [Complete Code] if necessary (https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop -Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/GA_jobshop_makespan.py) or [sample file] (https://wurmen.github.io/Genetic-Algorithm-for-Job -Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-jobshop/Example1.html)
 
-這裡主要針對程式中幾個重要區塊來說明，有些細節並無放入，如有需要請參考[完整程式碼](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/GA_jobshop_makespan.py)或[範例檔案](https://wurmen.github.io/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-jobshop/Example1.html)
-
-### :arrow_down_small: 導入所需套件 <br>
+### :arrow_down_small: Import the required kits <br>
 
 ```python
 '''==========Solving job shop scheduling problem by gentic algorithm in python======='''
 # importing required modules
-import pandas as pd
-import numpy as np
-import time
+Import pandas as pd
+Import numpy as np
+Import time
 ```
 
-### :arrow_down_small: 初始設定 <br>
-此區主要包含讀檔或是資料給定，以及一些參數上的設定
+### :arrow_down_small: Initial Settings <br>
+This area mainly contains reading files or data settings, as well as some parameter settings.
 ```python
-''' ================= initialization setting ======================'''
+''' ================= initialization setting =========================
 
 
-pt_tmp=pd.read_excel("JSP_dataset.xlsx",sheet_name="Processing Time",index_col =[0])
-ms_tmp=pd.read_excel("JSP_dataset.xlsx",sheet_name="Machines Sequence",index_col =[0])
+Pt_tmp=pd.read_excel("JSP_dataset.xlsx",sheet_name="Processing Time",index_col =[0])
+Ms_tmp=pd.read_excel("JSP_dataset.xlsx",sheet_name="Machines Sequence",index_col =[0])
 
-dfshape=pt_tmp.shape
-num_mc=dfshape[1] # number of machines
-num_job=dfshape[0] # number of jobs
-num_gene=num_mc*num_job # number of genes in a chromosome
+Dfshape=pt_tmp.shape
+Num_mc=dfshape[1] # number of machines
+Num_job=dfshape[0] # number of jobs
+Num_gene=num_mc*num_job # number of genes in a chromosome
 
-pt=[list(map(int, pt_tmp.iloc[i])) for i in range(num_job)]
-ms=[list(map(int,ms_tmp.iloc[i])) for i in range(num_job)]
+Pt=[list(map(int, pt_tmp.iloc[i])) for i in range(num_job)]
+Ms=[list(map(int,ms_tmp.iloc[i])) for i in range(num_job)]
 
 
 
 
 # raw_input is used in python 2
-population_size=int(input('Please input the size of population: ') or 30) # default value is 30
-crossover_rate=float(input('Please input the size of Crossover Rate: ') or 0.8) # default value is 0.8
-mutation_rate=float(input('Please input the size of Mutation Rate: ') or 0.2) # default value is 0.2
-mutation_selection_rate=float(input('Please input the mutation selection rate: ') or 0.2)
-num_mutation_jobs=round(num_gene*mutation_selection_rate)
-num_iteration=int(input('Please input number of iteration: ') or 2000) # default value is 2000
-    
-start_time = time.time()
+Population_size=int(input('Please input the size of population: ') or 30) # default value is 30
+Crossover_rate=float(input('Please input the size of Crossover Rate: ') or 0.8) # default value is 0.8
+Mutation_rate=float(input('Please input the size of Mutation Rate: ') or 0.2) # default value is 0.2
+Mutation_selection_rate=float(input('Please input the mutation selection rate: ') or 0.2)
+Num_mutation_jobs=round(num_gene*mutation_selection_rate)
+Num_iteration=int(input('Please input number of iteration: ') or 2000) # default value is 2000
+    
+Start_time = time.time()
 
 ```
 
-### :arrow_down_small: 產生初始解 <br>
-根據上述所設定的族群大小，透過隨機的方式，產生初始族群，每個染色體共有 10 x 10 = 100  個基因
+### :arrow_down_small: Generate initial solution <br>
+According to the above-mentioned population size, the initial population is generated in a random manner, and each chromosome has 10 x 10 = 100 genes.
 ```python
 '''----- generate initial population -----'''
 Tbest=999999999999999
-best_list,best_obj=[],[]
-population_list=[]
-for i in range(population_size):
-    nxm_random_num=list(np.random.permutation(num_gene)) # generate a random permutation of 0 to num_job*num_mc-1
-    population_list.append(nxm_random_num) # add to the population_list
-    for j in range(num_gene):
-        population_list[i][j]=population_list[i][j]%num_job # convert to job number format, every job appears m times
+Best_list, best_obj=[],[]
+Population_list=[]
+For i in range(population_size):
+    Nxm_random_num=list(np.random.permutation(num_gene)) # generate a random permutation of 0 to num_job*num_mc-1
+    Population_list.append(nxm_random_num) # add to the population_list
+    For j in range(num_gene):
+        Population_list[i][j]=population_list[i][j]%num_job # convert to job number format, every job appears m times
 
 ```
 
-### :arrow_down_small: 交配 <br>
+### :arrow_down_small: Mating <br>
 
-一開始會先產生一組用來選擇親代染色體的隨機序列，接著從序列中，兩個兩個抓出來，根據交配率來決定是否要進行交配，如果要，則採用雙點交配法，產生兩個子代，並取代原本的母代染色體
+At first, a set of random sequences for selecting the parental chromosomes will be generated first, and then two or two will be taken out from the sequence, and the mating rate will be used to determine whether or not to mate. If necessary, the two-point mating method is used to generate Two offspring and replace the original mother chromosome
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/6.png" width="450" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/6.png" width="450" height="300">
 </div>
 <br>
 
@@ -138,7 +137,7 @@ for i in range(population_size):
 	parent_list=copy.deepcopy(population_list) # preserve the original parent chromosomes
     offspring_list=copy.deepcopy(population_list)
     S=list(np.random.permutation(population_size)) # generate a random sequence to select the parent chromosome to crossover
-    
+
     for m in range(int(population_size/2)):
         crossover_prob=np.random.rand()
         if crossover_rate>=crossover_prob:
@@ -148,82 +147,81 @@ for i in range(population_size):
             child_2=parent_2[:]
             cutpoint=list(np.random.choice(num_gene, 2, replace=False))
             cutpoint.sort()
-        
+
             child_1[cutpoint[0]:cutpoint[1]]=parent_2[cutpoint[0]:cutpoint[1]]
             child_2[cutpoint[0]:cutpoint[1]]=parent_1[cutpoint[0]:cutpoint[1]]
             offspring_list[S[2*m]]=child_1[:]
             offspring_list[S[2*m+1]]=child_2[:]
 ```
-### :arrow_down_small: 修復 <br>
-本範例是一個 10 x 10 的 Job shop 問題，因此每個工件在染色體出現的次數為10次，但由於上面進行交配的動作，會導致有些染色體內的工件出現次數會小於10或大於10，而形成一個不可行的排程解，所以這裡必須針對不可行的染色體進行修復動作，使它成為一個可行排程
+### :arrow_down_small: Fix <br>
+This example is a 10 x 10 Job shop problem, so each artifact appears on the chromosome 10 times, but because of the above mating action, the number of artifacts in some chromosomes will be less than 10 or greater than 10, and Forming an infeasible scheduling solution, so it is necessary to repair the infeasible chromosomes to make it a viable schedule.
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/7.png" width="450" height="285">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/7 .png" width="450" ​​height="285">
 </div>
 <br>
 
 ```python
-    '''----------repairment-------------'''
-    for m in range(population_size):
-        job_count={}
-        larger,less=[],[] # 'larger' record jobs appear in the chromosome more than m times, and 'less' records less than m times.
-        for i in range(num_job):
-            if i in offspring_list[m]:
-                count=offspring_list[m].count(i)
-                pos=offspring_list[m].index(i)
-                job_count[i]=[count,pos] # store the above two values to the job_count dictionary
-            else:
-                count=0
-                job_count[i]=[count,0]
-            if count>num_mc:
-                larger.append(i)
-            elif count<num_mc:
-                less.append(i)
-                
-        for k in range(len(larger)):
-            chg_job=larger[k]
-            while job_count[chg_job][0]>num_mc:
-                for d in range(len(less)):
-                    if job_count[less[d]][0]<num_mc:                    
-                        offspring_list[m][job_count[chg_job][1]]=less[d]
-                        job_count[chg_job][1]=offspring_list[m].index(chg_job)
-                        job_count[chg_job][0]=job_count[chg_job][0]-1
-                        job_count[less[d]][0]=job_count[less[d]][0]+1                    
-                    if job_count[chg_job][0]==num_mc:
-                        break
+    '''----------repairment-------------'''
+    For m in range(population_size):
+        Job_count={}
+        Larger,less=[],[] # 'larger' record jobs appear in the chromosome more than m times, and 'less' records less than m times.
+        For i in range(num_job):
+            If i in offspring_list[m]:
+                Count=offspring_list[m].count(i)
+                Pos=offspring_list[m].index(i)
+                Job_count[i]=[count,pos] # store the above two values ​​to the job_count dictionary
+            Else:
+                Count=0
+                Job_count[i]=[count,0]
+            If count>num_mc:
+                Larger.append(i)
+            Elif count<num_mc:
+                Less.append(i)
+                
+        For k in range(len(larger)):
+            Chg_job=larger[k]
+            While job_count[chg_job][0]>num_mc:
+                For d in range(len(less)):
+                    If job_count[less[d]][0]<num_mc:
+                        Offspring_list[m][job_count[chg_job][1]]=less[d]
+                        Job_count[chg_job][1]=offspring_list[m].index(chg_job)
+                        Job_count[chg_job][0]=job_count[chg_job][0]-1
+                        Job_count[less[d]][0]=job_count[less[d]][0]+1
+                    If job_count[chg_job][0]==num_mc:
+                        Break
 ```
-### :arrow_down_small: 突變 <br>
+### :arrow_down_small: Mutant <br>
 
-這裡採用的突變方式跟 [Flow shop](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/GA%20for%20flow%20shop%20problem.md) 的例子相同，是透過基因位移的方式進行突變，突變方式如下:<br>
-1. 依據 mutation selection rate 決定染色體中有多少百分比的基因要進行突變，假設每條染色體有六個基因， mutation selection rate 為0.5，則有3個基因要進行突變。
-2. 隨機選定要位移的基因，假設選定5、2、6 (在此表示該位置下的基因要進行突變)
-3. 進行基因移轉，移轉方式如圖所示。
+The mutation method used here is [Flow shop] (https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA The same example of -flowshop/GA%20for%20flow%20shop%20problem.md) is a mutation by means of gene displacement. The mutation method is as follows:<br>
+1. According to the mutation selection rate, determine how many genes in the chromosome are to be mutated. If there are six genes per chromosome and the mutation selection rate is 0.5, then 3 genes will be mutated.
+2. Randomly select the gene to be displaced, assuming 5, 2, 6 are selected (here, the gene at this position is to be mutated)
+3. Perform gene transfer and transfer as shown.
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6.png" width="450" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6 .png" width="450" ​​height="250">
 </div>
 <br>
 
 ```python
-'''--------mutatuon--------'''   
-    for m in range(len(offspring_list)):
-        mutation_prob=np.random.rand()
-        if mutation_rate >= mutation_prob:
-            m_chg=list(np.random.choice(num_gene, num_mutation_jobs, replace=False)) # chooses the position to mutation
-            t_value_last=offspring_list[m][m_chg[0]] # save the value which is on the first mutation position
-            for i in range(num_mutation_jobs-1):
-                offspring_list[m][m_chg[i]]=offspring_list[m][m_chg[i+1]] # displacement
-            
-            offspring_list[m][m_chg[num_mutation_jobs-1]]=t_value_last # move the value of the first mutation position to the last mutation position
-  
+'''--------mutatuon--------'''
+    For m in range(len(offspring_list)):
+        Mutation_prob=np.random.rand()
+        If mutation_rate >= mutation_prob:
+            M_chg=list(np.random.choice(num_gene, num_mutation_jobs, replace=False)) # chooses the position to mutation
+            T_value_last=offspring_list[m][m_chg[0]] # save the value which is on the first mutation position
+            For i in range(num_mutation_jobs-1):
+                Offspring_list[m][m_chg[i]]=offspring_list[m][m_chg[i+1]] # displacement
+            
+            Offspring_list[m][m_chg[num_mutation_jobs-1]]=t_value_last # move the value of the first mutation position to the last mutation position
+  
 ```
-### :arrow_down_small: 適應值計算 <br>
+### :arrow_down_small: Adaptive Value Calculation <br>
 
-計算每個染色體所形成的排程結果的完工時間，並將其記錄，以利後續選擇時能比較<br>
+Calculate the completion time of the scheduling results formed by each chromosome and record them for comparison in subsequent selections<br>
 
-:bulb: 這裡要注意的是，因為這是最小化的問題，因此每個染色體所算出的適應值，也就是完工時間，必須以倒數的方式記錄 (chrom_fitness)，這樣後面採用輪盤法時，才可以選到完工時間越小的染色體，不過這邊還是有另外紀錄每個染色體原本的完工時間 (chrom_fit)，以利最後面再篩選此輪最佳解時，可直接比較
-
+:bulb: It should be noted here that since this is a minimization problem, the fitness value calculated for each chromosome, that is, the completion time, must be recorded in a reciprocal manner (chrom_fitness), so that when the roulette method is used later, Only the chromosomes with the shorter completion time can be selected, but there is still another record of the completion time (chrom_fit) of each chromosome, so that the final solution can be directly compared to the best solution of this round.
 ```python
     '''--------fitness value(calculate makespan)-------------'''
     total_chromosome=copy.deepcopy(parent_list)+copy.deepcopy(offspring_list) # parent and offspring chromosomes combination
@@ -235,85 +233,84 @@ for i in range(population_size):
         j_count={key:0 for key in j_keys}
         m_keys=[j+1 for j in range(num_mc)]
         m_count={key:0 for key in m_keys}
-        
+
         for i in total_chromosome[m]:
             gen_t=int(pt[i][key_count[i]])
             gen_m=int(ms[i][key_count[i]])
             j_count[i]=j_count[i]+gen_t
             m_count[gen_m]=m_count[gen_m]+gen_t
-            
+
             if m_count[gen_m]<j_count[i]:
                 m_count[gen_m]=j_count[i]
             elif m_count[gen_m]>j_count[i]:
                 j_count[i]=m_count[gen_m]
-            
+
             key_count[i]=key_count[i]+1
-    
+
         makespan=max(j_count.values())
         chrom_fitness.append(1/makespan)
         chrom_fit.append(makespan)
         total_fitness=total_fitness+chrom_fitness[m]
 ```
+### :arrow_down_small: Select <br>
 
-### :arrow_down_small: 選擇  <br>
-
-這裡採用輪盤法 (Roulette wheel) 的選擇機制<br>
+Here, the Roulette wheel selection mechanism is used<br>
 
 ```python
-    '''----------selection(roulette wheel approach)----------'''
-    pk,qk=[],[]
-    
-    for i in range(population_size*2):
-        pk.append(chrom_fitness[i]/total_fitness)
-    for i in range(population_size*2):
-        cumulative=0
-        for j in range(0,i+1):
-            cumulative=cumulative+pk[j]
-        qk.append(cumulative)
-    
-    selection_rand=[np.random.rand() for i in range(population_size)]
-    
-    for i in range(population_size):
-        if selection_rand[i]<=qk[0]:
-			population_list[i]=copy.deepcopy(total_chromosome[0])
-        else:
-            for j in range(0,population_size*2-1):
-                if selection_rand[i]>qk[j] and selection_rand[i]<=qk[j+1]:
-					population_list[i]=copy.deepcopy(total_chromosome[j+1])
-                    break
+    '''----------selection(roulette wheel approach)----------'''
+    Pk,qk=[],[]
+    
+    For i in range(population_size*2):
+        Pk.append(chrom_fitness[i]/total_fitness)
+    For i in range(population_size*2):
+        Cumulative=0
+        For j in range(0,i+1):
+            Cumulative=cumulative+pk[j]
+        Qk.append(cumulative)
+    
+    Selection_rand=[np.random.rand() for i in range(population_size)]
+    
+    For i in range(population_size):
+        If selection_rand[i]<=qk[0]:
+Population_list[i]=copy.deepcopy(total_chromosome[0])
+        Else:
+            For j in range(0,population_size*2-1):
+                If selection_rand[i]>qk[j] and selection_rand[i]<=qk[j+1]:
+Population_list[i]=copy.deepcopy(total_chromosome[j+1])
+                    Break
 ```
 
-### :arrow_down_small: 比較 <br>
-先比較每個染色體的完工時間 (chrom_fit) ，選出此輪找到的最好解 (Tbest_now) ，接著在跟目前為止找到的最好解 (Tbest) 進行比較，一旦這一輪的解比目前為止找到的解還要好，就替代 Tbest 並記錄該解所得到的排程結果
+### :arrow_down_small: Compare <br>
+First compare the completion time of each chromosome (chrom_fit), select the best solution (Tbest_now) found in this round, and then compare it with the best solution (Tbest) found so far, once the solution of this round is found so far. If the solution is better, replace Tbest and record the result of the solution.
 ```python
-     '''----------comparison----------'''
-    for i in range(population_size*2):
-        if chrom_fit[i]<Tbest_now:
-            Tbest_now=chrom_fit[i]
-            sequence_now=copy.deepcopy(total_chromosome[i])
-    
-    if Tbest_now<=Tbest:
-        Tbest=Tbest_now
-        sequence_best=copy.deepcopy(sequence_now)
+     '''----------comparison----------'''
+    For i in range(population_size*2):
+        If chrom_fit[i]<Tbest_now:
+            Tbest_now=chrom_fit[i]
+            Sequence_now=copy.deepcopy(total_chromosome[i])
+    
+    If Tbest_now<=Tbest:
+        Tbest=Tbest_now
+        Sequence_best=copy.deepcopy(sequence_now)
 ```
 
-### :arrow_down_small: 結果 <br>
-等迭代結束後，輸出在所有迭代中找到的最好排程結果 (sequence_best)、該結果的完工時間以及程式執行時間
+### :arrow_down_small: Results <br>
+After the end of the iteration, output the best schedule result (sequence_best) found in all iterations, the completion time of the result, and the program execution time.
 
 ```python
 '''----------result----------'''
-print("optimal sequence",sequence_best)
-print("optimal value:%f"%Tbest)
-print('the elapsed time:%s'% (time.time() - start_time))
+Print("optimal sequence",sequence_best)
+Print("optimal value:%f"%Tbest)
+Print('the elapsed time:%s'% (time.time() - start_time))
 ```
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/8.JPG" width="700" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/8 .JPG" width="700" height="350">
 </div>
 <br>
 
-### :arrow_down_small: 甘特圖 <br>
-在此使用python plotly package 來繪製甘特圖，詳細安裝方法，可參考[Plotly官網](https://plot.ly/python/getting-started/)
+### :arrow_down_small: Gantt Chart <br>
+Use python plotly package to draw the Gantt chart. For detailed installation methods, please refer to [Plotly official website] (https://plot.ly/python/getting-started/)
 ```python
 '''--------plot gantt chart-------'''
 import pandas as pd
@@ -332,31 +329,31 @@ for i in sequence_best:
     gen_m=int(ms[i][key_count[i]])
     j_count[i]=j_count[i]+gen_t
     m_count[gen_m]=m_count[gen_m]+gen_t
-    
+
     if m_count[gen_m]<j_count[i]:
         m_count[gen_m]=j_count[i]
     elif m_count[gen_m]>j_count[i]:
         j_count[i]=m_count[gen_m]
-    
+
     start_time=str(datetime.timedelta(seconds=j_count[i]-pt[i][key_count[i]])) # convert seconds to hours, minutes and seconds
     end_time=str(datetime.timedelta(seconds=j_count[i]))
-        
+
     j_record[(i,gen_m)]=[start_time,end_time]
-    
+
     key_count[i]=key_count[i]+1
-        
+
 
 df=[]
 for m in m_keys:
     for j in j_keys:
         df.append(dict(Task='Machine %s'%(m), Start='2018-07-14 %s'%(str(j_record[(j,m)][0])), Finish='2018-07-14 %s'%(str(j_record[(j,m)][1])),Resource='Job %s'%(j+1)))
-    
+
 fig = ff.create_gantt(df, index_col='Resource', show_colorbar=True, group_tasks=True, showgrid_x=True, title='Job shop Schedule')
 py.iplot(fig, filename='GA_job_shop_scheduling1', world_readable=True)
 ```
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/9.JPG" width="650" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/9.JPG" width="650" height="350">
 </div>
 <br>
 
