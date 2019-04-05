@@ -1,7 +1,6 @@
 # Solving Job shop scheduling problem with Nondominated Sorting Genetic Algorithm II
 
-*POLab* <br>
-*[cheng-man wu](https://www.linkedin.com/in/chengmanwu)*<br>
+
 *2018/07/15*
 <br>
 
@@ -30,7 +29,7 @@ This example is a 10x10 Jop shop problem, a total of 10 workpieces and 10 sets o
 </div>
 <br>
 
-### :arrow_down_small: 排程目標 <br>
+### :arrow_down_small: Scheduling target <br>
 This example is a multi-objective scheduling problem, with a total of two targets being the minimum total completion time (Makespan) and the total weighted early time and delay time (total weighted earliness and tardiness, TWET), which are conflict targets, makes The sooner Pan expects to be completed, the better, but TWET hopes that the better the completion time, the better, too early or too late to complete will give the penalty value, so there must be a trade-off between the two solutions.
 <br>
 
@@ -52,7 +51,7 @@ O<sub>ijk</sup></sub>  Indicates that the workpiece I uses the K machine in the 
 
 ## :black_nib: Description of the program <br>
 
-Here mainly for a few important blocks in the program to explain, some details are not put in, if necessary please refer to [Complete program code](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/NSGA-II%20code.py)或[範例檔案](https://wurmen.github.io/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/Example_NSGAII.html)<br>
+Here mainly for a few important blocks in the program to explain, some details are not put in, if necessary please refer to [Complete program code](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/NSGA-II%20code.py)Or[Sample Archive](https://wurmen.github.io/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/Example_NSGAII.html)<br>
 
 :bulb:As the following procedures have three main functions, it is recommended that you can self-print function input and output values to facilitate the execution of the function of the solution  
 
@@ -156,10 +155,10 @@ def calculate_crowding_distance(front,chroms_obj_record):
             
     return distance 
 ```
-### :arrow_down_small: 選擇函式 <br>
-此函式內部會呼叫計算擁擠距離的函式 (calculate_crowding_distance)，因為在選擇染色體形成新族群的過程中，當剩餘要被挑選的染色體數，小於當前的凌越前緣內的染色體數時，就必須透過擁擠距離來判斷我要選擇哪一條染色體。<br>
-- 輸入：族群大小、由非凌越函式得到的各前緣內含的染色體 index、要被選擇的所有染色體的適應值以及各染色體的排程結果 list
-- 輸出：新的族群 list 及 族群內在原本族群 list 中的 index 
+### :arrow_down_small: Select a function <br>
+A function (calculate_crowding_distance) is called inside this function to calculate the crowding distance, because in the process of selecting chromosomes to form a new population, when the number of chromosomes to be selected is less than the number of chromosomes in the current edge of the atom, You have to tell which chromosome I'm going to choose through a crowded distance.<br>
+- Input: The size of the population, the chromosome index contained in the front edges obtained by the non-in function, the adaptive value of all chromosomes to be selected, and the scheduling results of each chromosome list
+- Output: The new ethnic list and the index in the list of the original ethnic groups within the ethnic group 
 ```python
 '''----------selection----------'''
 def selection(population_size,front,chroms_obj_record,total_chromosome):   
@@ -186,9 +185,9 @@ def selection(population_size,front,chroms_obj_record,total_chromosome):
     
     return population_list,new_pop
 ```
-### :arrow_down_small: 產生初始解 <br>
+### :arrow_down_small: Generate an initial solution <br>
 
-根據上述所設定的族群大小，透過隨機的方式，產生初始族群，每個染色體共有 10 x 10 = 100  個基因，每一個染色體由一個 list 來儲存
+Depending on the size of the population set above, the initial population is produced in a random manner, with a total of 10 = 100 genes per chromosome, each of which is stored by a list
 
 ```python
 '''----- generate initial population -----'''
@@ -202,8 +201,8 @@ for i in range(population_size):
 
 ```
 
-### :arrow_down_small: 交配 <br>
-這裡採用雙點交配法，一開始會先產生一組用來選擇親代染色體的隨機序列，接著從序列中，兩個兩個抓出來，根據交配率來決定是否要進行交配，如果要，則交配產生兩個子代，並取代原本的親代染色體
+### :arrow_down_small: Mating <br>
+A two-point mating method is used to initially produce a set of random sequences used to select the parental chromosome, followed by two two in the sequence, to decide whether to mate according to the mating rate, and, if so, to mate to produce two offspring and replace the original parental chromosome
 ```python
     '''-------- two point crossover --------'''
     parent_list=copy.deepcopy(population_list)
@@ -225,8 +224,8 @@ for i in range(population_size):
         
         offspring_list.extend((child_1,child_2)) # append child chromosome to offspring list
 ```
-### :arrow_down_small: 修復 <br>
-本範例是一個 10 x 10 的 Job shop 問題，因此每個工件在染色體出現的次數為10次，但由於上面進行交配的動作，會導致有些染色體內的工件出現次數會小於10或大於10，而形成一個不可行的排程解，所以這裡必須針對不可行的染色體進行修復動作，使它成為一個可行排程
+### :arrow_down_small: Repair <br>
+This example is a Job shop problem with 10 x 10，As a result, each workpiece appears 10 times in chromosomes, but because of the mating action above, it will cause the number of workpieces in some chromosomes to appear less than 10 or greater than 10, resulting in an unworkable scheduling solution, so this must be done for the unworkable chromosome repair action, so that it becomes a feasible schedule
 
 ```python
     '''----------repairment-------------'''
@@ -258,12 +257,12 @@ for i in range(population_size):
                     if job_count[chg_job][0]==num_mc:
                         break 
 ```
-### :arrow_down_small: 突變 <br>
+### :arrow_down_small: Mutation <br>
 
-這裡採用的突變方式跟 [Flow shop](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/GA%20for%20flow%20shop%20problem.md) 的例子相同，是透過基因位移的方式進行突變，突變方式如下:<br>
-1. 依據 mutation selection rate 決定染色體中有多少百分比的基因要進行突變，假設每條染色體有六個基因， mutation selection rate 為0.5，則有3個基因要進行突變。
-2. 隨機選定要位移的基因，假設選定5、2、6 (在此表示該位置下的基因要進行突變)
-3. 進行基因移轉，移轉方式如圖所示。
+The Mutant method used here [Flow shop](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/GA%20for%20flow%20shop%20problem.md) The same example is the mutation through the way of gene displacement, which is mutated in the following ways:<br>1. According to mutation selection rate determines how many percentages of genes in chromosomes are mutated, assuming that each chromosome has six genes and mutation selection rate 0.5, 3 genes are mutated.
+
+2. Randomly select the gene to be displaced, assuming that 5, 2, 6 are selected (in this case, the gene at that position is mutated)
+3. Gene transfer, the way of transfer as shown in the figure.
 <br>
 <div align=center>
 <img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6.png" width="450" height="250">
@@ -283,9 +282,9 @@ for i in range(population_size):
             offspring_list[m][m_chg[num_mutation_jobs-1]]=t_value_last # move the value of the first mutation position to the last mutation position   
   
 ```
-### :arrow_down_small: 適應值計算 <br>
-- 計算每個染色體的兩個目標值- makespan and TWET
-- 這裡會將親代 (parent_list) 與子代 (offspring_list) 合併成一個大的list (total_chromosome)，後續選擇時是從這個大 list 來進行選擇，產生新族群
+### :arrow_down_small: Adaptive value Calculation <br>
+-  Calculate two target values per chromosome - makespan and TWET
+- The parental (parent_list) and The Offspring (Offspring_list) are merged into a large list (total_chromosome), followed by a selection from this large list to create a new ethnic group
 ```python
      '''--------fitness value(calculate  makespan and TWET)-------------'''
     total_chromosome=copy.deepcopy(parent_list)+copy.deepcopy(offspring_list) # combine parent and offspring chromosomes
@@ -329,12 +328,12 @@ for i in range(population_size):
         makespan=max(j_count.values())
         chroms_obj_record[m]=[twet,makespan]
 ```
-### :arrow_down_small: 非凌越排序計算  <br>
+### :arrow_down_small: Non-atom sort calculation  <br>
 ```python
     '''-------non-dominated sorting-------'''      
     front=non_dominated_sorting(population_size,chroms_obj_record
 ```
-### :arrow_down_small: 選擇  <br>
+### :arrow_down_small: Choose  <br>
 
 ```python
     '''----------selection----------'''
@@ -342,8 +341,8 @@ for i in range(population_size):
     new_pop_obj=[chroms_obj_record[k] for k in new_pop]
 ```
 
-### :arrow_down_small: 比較 <br>
-將此輪找到最好的那些解，與目前為止迭代中找到得最好的解進行比較
+### :arrow_down_small: Comparison <br>
+Find the best solutions for this round and compare them with the best solutions found in the iteration so far
 ```
     '''----------comparison----------'''
 	if n==0:
@@ -358,8 +357,8 @@ for i in range(population_size):
         best_obj=[total_obj[k] for k in best_pop]
 ```
 
-### :arrow_down_small: 結果 <br>
-最終會輸出在所有迭代過程中找到最好的解，由於這是多目標問題，所以可能會有多組解，這邊的設定是，輸出與族群大小相同數量的解
+### :arrow_down_small: Results <br>
+Eventually the output will be found in all iterations to find the best solution, because this is a multi-objective problem, so there may be multiple sets of solutions, this side of the setting is that the output and the size of the population of the same number of solutions
 ```python
 '''----------result----------'''
 print(best_list)
