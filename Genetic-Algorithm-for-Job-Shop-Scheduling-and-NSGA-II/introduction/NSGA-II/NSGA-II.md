@@ -3,140 +3,139 @@
 *[cheng-man wu](https://www.linkedin.com/in/chengmanwu/)*<br>
 *2018/06/12*
 <br>
-## :black_nib: 前言
-上一篇文章介紹了什麼是基因演算法 (GA)，而本文介紹的非凌越排序基因演算法 (NSGA-II) 由 NSGA 改良而來，是 K.Deb, A.Pratap, S.Agarwal, T.Meyarivan 於 2002 年所提出，該演算法的架構與 GA 相似，但專門被用來求解具有多目標的問題，因此本篇文章將要介紹何謂 NSGA-II ，並在最後透過 PYTHON 來進行實作，求解具有雙目標的排程 Jop Shop 問題。
+## :black_nib: Foreword
+The previous article introduced what is genetic algorithm (GA), and the non-metaphase sorting gene algorithm (NSGA-II) introduced in this paper was improved by NSGA, which is K.Deb, A.Pratap, S.Agarwal, T. Meyarivan proposed in 2002 that the architecture of the algorithm is similar to that of GA, but it is specifically used to solve problems with multiple goals, so this article will introduce what NSGA-II is, and finally implement it through PYTHON. Solve the scheduling Jop Shop problem with dual targets.
 <br>
 
-## :black_nib: "凌越 (dominated) "的概念是什麼?
-一般而言，在單目標問題中，我們可以很容易的判斷什麼是最佳解，哪些解叫好，哪些叫壞，但當我們遇到多目標問題時，解的品質就不是那麼容易判斷了，尤其是目標之間具有衝突時，因此，在多目標問題中會透過"凌越"的概念來判斷一個解的好壞。<br>
+## :black_nib: What is the concept of "dominated"?
+In general, in the single-objective problem, we can easily judge what is the best solution, which solutions are good, and which are bad, but when we encounter multiple goals, the quality of the solution is not so easy to judge. Especially when there is a conflict between the targets, therefore, in the multi-objective problem, the concept of "Ling Yue" will be used to judge the quality of a solution. <br>
 
-我們舉一個簡單的例子來說明此概念，假設現在有四個人想跟我做朋友，他們各自的薪水及身高如左下表所示，而我的交友條件有兩個目標-身高及薪水，也就是我希望所交到的朋友身高與薪水越高越好，因此這兩個目標皆為最大化問題。從表中可以發現， A 不管再身高或薪水都表現比其他人好，所以我們稱A凌越其他所有解，以數學符號表示為 A≻B、C、D ，而A在該問題中又可被稱為非凌越解 (non-dominated solution) ，另外， B 與 C 在身高及薪水上，各有其優勢，因此這兩個解互不凌越， D 不管再身高還是薪水都劣於其他人，所以 D 被所有人凌越，也就是 A≻D、B≻D，C≻D 。<br>
-
-<br>
-<div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/1.png" width="550" height="250">
-</div>
-<br>
-
-由於上述問題為雙目標問題，因此將其畫成圖，可表示如右上圖的二維空間，當我們獲得的解越來越多時(在此問題中一個解表示一個人)，**一旦找到一組解，這組解彼此互不凌越，且不被任何解給凌越時，我們稱這組解為柏拉圖最佳解 (Pareto-optimal solution)** ，而由這組解所形成的前緣稱為柏拉圖最佳前緣 (Pareto-optimal front) ，也就是如圖中的藍色線。因此，在多目標問題中，**最關鍵的地方就是找出柏拉圖最佳前緣**，前緣上的解也就是我們想要的解，所以在多目標問題中，不像單目標問題有一個唯一最佳解，一般來說是會有多組解存在。
-
-## :black_nib: NSGA-II 架構
-NSGE-II 的架構如下圖所示，如同前言所提，它的架構與 GA 相似，唯一較大的不同在於紅色框的部分，因此接下來將會放較多的重心在說明紅色框內的四個部分，並在最後進行統整說明。
+Let's take a simple example to illustrate this concept. Suppose there are four people who want to be friends with me. Their salary and height are as shown in the table below, and my friendship has two goals - height and salary, that is, I hope that the higher the salary and salary of the friends I have, the better, so both goals are maximizing the problem. From the table, we can find that A is better than others in terms of height and salary, so we call A Lingyue all other solutions, which are represented by mathematical symbols as A≻B, C, D, and A can be in this problem. Known as non-dominated solution, B and C have their own advantages in height and salary, so these two solutions are not in conflict, D is no worse than other heights or salaries. People, so D is overtaken by everyone, that is, A≻D, B≻D, C≻D. <br>
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/2.png" width="550" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/1.png" width="550" height="250">
 </div>
 <br>
 
-### :arrow_down_small: 菁英策略 (Elitism strategy) <br>
+Since the above problem is a two-objective problem, it is drawn into a graph, which can represent the two-dimensional space as shown in the upper right image. When we get more and more solutions (one solution in this question represents a person), ** once found A set of solutions, which are mutually incompatible with each other and are not given to Lingyue. We call this set of solutions Pareto-optimal solution**, which is formed by this set of solutions. The leading edge is called the Pareto-optimal front, which is the blue line in the figure. Therefore, in the multi-objective problem, the most critical part of ** is to find the best frontier of Plato**, and the solution on the leading edge is the solution we want, so in the multi-objective problem, it is not like the single-objective problem. There is a single best solution, and in general there will be multiple sets of solutions.
 
-為了確保所留下來的染色體都是優秀的、可行的，在進行適應性評估前 (fitness evaluation) 採用了菁英策略，此策略簡單來說，就是將交配、突變前的親代與交配、突變後的子代一同保留下來，進行評選，以防止染色體會越選越糟的情形，避免損失掉找到的優質解。
+## :black_nib: NSGA-II Architecture
+The architecture of NSGE-II is shown in the figure below. As mentioned in the introduction, its architecture is similar to that of GA. The only big difference is the part of the red box, so the next step will be to put more emphasis on the four in the red box. The parts are explained at the end.
 
-### :arrow_down_small: 非凌越排序 (Nondominated sorting approach) <br>
-
-相較於原本的 NSGA ， NSGA-II 提出了一個更快速的非凌越排序法，並擁有較少的時間複雜度，且不需要指定分享函數 (sharing function) ，以下將要介紹整個非凌越排序的主要概念，並沿用上面的例子來進行說明，在此我將它分為五個執行步驟。( NSGA 詳細內容可參考[原文](https://pdfs.semanticscholar.org/b39d/633524b0b2b46474d35b27c2016f3c3f764d.pdf)) <br>
-
-:balloon: **Step 1. 計算每個解的兩個實體 (Calculating two entities for each solution) ：n<sub>p</sup></sub>、 S<sub>p</sup></sub>** <br>
-
- p 為被計算解的代稱，n<sub>p</sup></sub> 表示凌越解 p 的個數(可想像成解 p 被多少解霸凌)，S<sub>p</sup></sub> 則為被解 p 凌越的解集合(也就是有誰被解 p 霸凌)，以上面的例子為例，可得到左下表：
-
-從右圖中可以很清楚的看到，解 A 凌越了所有解，因此 S<sub>A</sup></sub>={B、C、D} ，而 n<sub>A</sup></sub>=0 ； B 僅被 A 給凌越，且凌越了解 D ，所以 n<sub>B</sup></sub>=1 、 S<sub>B</sup></sub>={D} ，其它以此類推......
+<br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/3.png" width="600" height="300">
-</div>
-
-:balloon: **Step 2. 找出第一組非凌越前緣的成員 (Finding the members of the first nondominated front) ：n<sub>p</sup></sub>= 0** <br>
-
-經由上個步驟我們可以得到每個解與其它解的凌越關係表，接著我們要將這些解進行分級，以利作為最終選擇染色體(解)的指標，其概念如下圖所示，我們會透過凌越關係表，將這些解分成不同的 level ，第一層的非凌越解具有最高層級(也就是柏拉圖前緣解)，而第二層具有次高層級，以此類推，層級越高具有越高的優先權被選擇成為新的人口 (population)
-
-<div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/4.png" width="325" height="250">
-</div>
-
-因此，一開始要先找出第一層優先解，也就是在上一步驟形成的表中 n<sub>p</sup></sub>= 0 的解，在此例中即為解A和位於藍色線上的解，並給予這些解的排序等級為1。
-
-<div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/5.png" width="300" height="175">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/2.png" width="550" height="350">
 </div>
 <br>
 
-:balloon: **Step 3. 對於每個 n<sub>p</sup></sub>= 0 的解，去探訪這些解 S<sub>p</sup></sub> 集合內的每個解 (q) ，並將集合內解的凌越數 n<sub>p</sup></sub> 減一<br> (For each solution with n<sub>p</sup></sub>= 0, we visit each member (q) of its set S<sub>p</sup></sub> and reduce its domination count by one.)**<br>
+### :arrow_down_small: Elitisr Strategy <br>
 
-:balloon: **Step 4. 在上一步訪問每個解的過程中，若有任何解 n<sub>p</sup></sub> 變成0，則該解即屬於第二非凌越前緣，因此賦予它排序等級為2**<br>
+In order to ensure that the remaining chromosomes are excellent and feasible, the elite strategy is adopted in the fitness evaluation. This strategy is simply a mating, parental and mating mutation before mutation. The descendants are kept together and selected to prevent the chromosomes from getting worse and worse, and to avoid losing the good solution found.
+
+### :arrow_down_small: Nondominated sorting approach <br>
+
+Compared to the original NSGA, NSGA-II proposes a faster non-over-ordering method with less time complexity and no need to specify the sharing function. The following will introduce the entire non-overlapping order. The main concept, and use the above example to illustrate, here I divide it into five implementation steps. (For details of NSGA, please refer to [Original] (https://pdfs.semanticscholar.org/b39d/633524b0b2b46474d35b27c2016f3c3f764d.pdf)) <br>
+
+:balloon: **Step 1. Calculate two entities for each solution: n<sub>p</sup></sub>, S<sub>p</sup></ Sub>** <br>
+
+ p is the pronoun of the solution to be solved, n<sub>p</sup></sub> represents the number of solutions of the Ling Yue solution (Imagine how many solutions are solved by the solution), S<sub>p</sup ></sub> is the solution set of the solution to the solution (that is, who is being solved by P.). Taking the above example as an example, you can get the following table:
+
+It can be clearly seen from the image on the right that the solution A has over all the solutions, so S<sub>A</sup></sub>={B, C, D} and n<sub>A</ Sup></sub>=0; B is only given to Ling by A, and Ling knows D, so n<sub>B</sup></sub>=1, S<sub>B</sup>< /sub>={D}, others and so on...
+<div align=center>
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/3.png" width="600" height="300">
+</div>
+
+:balloon: **Step 2. Find the members of the first nondominated front: (n<sub>p</sup></sub>= 0** <br>
+
+Through the previous step, we can get a list of the relationship between each solution and other solutions. Then we will classify these solutions to facilitate the final selection of chromosomes (solutions). The concept is as shown in the following figure. The Lingyue relationship table divides the solutions into different levels. The non-linger solution of the first layer has the highest level (that is, the Platonic front solution), while the second layer has the second highest level, and so on. The higher the priority is selected as the new population (population)
+
+<div align=center>
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/4.png" width="325" height="250">
+</div>
+
+Therefore, in the beginning, we must first find the first layer of the first solution, that is, the solution of n<sub>p</sup></sub>= 0 in the table formed in the previous step, in this case, the solution A. And the solution on the blue line, and give these solutions a rank of 1.
+
+<div align=center>
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/5.png" width="300" height="175">
+</div>
+<br>
+
+:balloon: **Step 3. For each solution of n<sub>p</sup></sub>= 0, visit each of these solutions in the S<sub>p</sup></sub> collection Solution (q) and subtract the number of n<sub>p</sup></sub> from the solution (< each> with each solution with n<sub>p</sup></sub >= 0, we visit each member (q) of its set S<sub>p</sup></sub> and reduce its domination count by one.)**<br>
+
+:balloon: **Step 4. In the previous step of accessing each solution, if any solution n<sub>p</sup></sub> becomes 0, then the solution belongs to the second non-transition front , so give it a sorting level of 2**<br>
 **(If for any member the domination count becomes zero, it belongs to the second nondominated front.)**<br>
 
-從Step 2中我們知道 n<sub>p</sup></sub>= 0 的解只有 A，而被 A 凌越的解有 B、C、D (從 S<sub>p</sup></sub> 得知)，因此我們一一的去造訪這些解，並將其 n<sub>p</sup></sub> 減一，可得到更新的表如下，並在造訪的過程中發現，解 B 及解 C 的 n<sub>p</sup></sub> 皆變為0，所以它們為第二非凌越前緣的解，故賦予它們排序等級為2，亦即第二優先被挑選成 population 的解
+From Step 2, we know that the solution of n<sub>p</sup></sub>= 0 is only A, and the solution of A is more than B, C, D (from S<sub>p</sup> </sub> learned), so we went to visit these solutions one by one, and reduced their n<sub>p</sup></sub> by one, to get the updated table as follows, and in the process of visiting It is found that the n<sub>p</sup></sub> of the solution B and the solution C become 0, so they are the solutions of the second non-transition leading edge, so they are given a rank of 2, that is, the second Priority is selected as a solution to population
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/6.png" width="300" height="175">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/6.png" width="300" height="175">
 </div>
 <br>
-
-:balloon: **Step 5.重複執行以上步驟，直到所有前緣都被辨識出來為止**<br>
+:balloon: **Step 5. Repeat the above steps until all leading edges are recognized**<br>
 **(The above procedures are continued until all fronts are identified.)**<br>
 
 :bulb: Pseudo code
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/7.png" width="450" height="500">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/7.png" width="450" ​​height="500">
 </div>
 
-### :arrow_down_small: 擁擠距離 (Crowding-distance)
+### :arrow_down_small: Crowding distance (Crowding-distance)
 
-為了保持解的多樣性，以及當不同解位於同樣的非凌越層級時能做出選擇，這裡提出了擁擠距離的方法，來評估群體中每個解與其周圍解的密度關係，其概念如下圖所示，再算一個特定解的擁擠距離時，我們會循著該解位於的非凌越前緣上，在此前緣中沿著每個目標找出距離該特定解左右最近的兩個相鄰解，去計算這兩個解的平均距離，最後將每個目標算出來的距離進行加總，即得到該特定解的擁擠距離。以下圖的雙目標例子來說，第i個解在其前緣的擁擠距離，即是距離解i最近的兩個解所圍出來的長方形的平均邊長。
+In order to maintain the diversity of solutions and to make choices when different solutions are located at the same non-linger level, a method of crowding distance is proposed to evaluate the density relationship between each solution in the group and its surrounding solutions. The concept is as follows: As shown, when we calculate the crowded distance of a particular solution, we follow the non-over the leading edge of the solution, and find the two adjacent solutions that are closest to the specific solution along each target in the leading edge. To calculate the average distance between the two solutions, and finally sum the distances calculated by each target to obtain the crowded distance of the specific solution. In the dual-target example of the following figure, the crowded distance of the i-th solution at its leading edge is the average side length of the rectangle enclosed by the two solutions closest to the solution i.
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/8.png" width="500" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/8.png" width="500" height="350">
 </div>
 
-如同上一段所提，計算擁擠距離有助於保持解的多樣性，該意思是指，當要從一群位於相同非凌越前緣的解，進行解的挑選時，**會傾向選擇擁擠距離較大的解**，因為擁擠距離越大，表示該解與其他解的差異性較大，這有助於後面演算法迭代的過程中，可以避免落入局部解的情形，而達到探索 (exploration) 的效果，以期望找到更多更好的解，而擁擠距離詳細的計算方式如下:<br>
+As mentioned in the previous paragraph, calculating the crowded distance helps to maintain the diversity of the solution, which means that when a solution is to be selected from a group of solutions located at the same non-over the leading edge, ** tends to choose a crowded distance. The big solution **, because the congestion distance is larger, indicating that the solution is more different from other solutions, which helps to avoid the situation of falling into the local solution during the iterative process of the algorithm, and to achieve exploration (exploration) The effect is expected to find more and better solutions, and the congestion distance is calculated in detail as follows:<br>
 
-:balloon: **Step 1.將每個目標的解由小到大遞增排序，並透過下列公式算出每個解  i 在每個目標的評估距離 distance<sub>o</sup></sub>(i)**<br>
+:balloon: **Step 1. Sort each target's solution from small to large, and calculate each solution by the following formula. The estimated distance of each target is distance<sub>o</sup></sub> (i)**<br>
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/9.png" width="360" height="130">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/9.png" width="360" height="130">
 </div>
 
-o 表示目標、 F<sub>o</sup></sub>(i) 為目標 O 排序後的第 i 個解、 F<sub>o,max</sup></sub> 為最大邊界解、 F<sub>o,min</sup></sub> 為最小邊界解 <br>
+o indicates the target, F<sub>o</sup></sub>(i) is the ith solution after sorting the target O, F<sub>o,max</sup></sub> is the maximum boundary solution , F<sub>o,min</sup></sub> is the minimum boundary solution<br>
 
-##### :zap:上述公式有進行正規化的動作，以避免不同目標解間的數值規模差異太大，因此將各目標轉換至相同尺度，以利後續進行比較 <br>
+##### :zap: The above formula has a normalization action to avoid the difference in numerical scale between different target solutions, so the targets are converted to the same scale for subsequent comparison. <br>
 <br>
 
-:balloon: **Step 2.將每個解在每個目標所算出來的評估距離 (distance<sub>o</sup></sub>(i)) 進行加總，即可得到每個解的總擁擠距離 CD(i)** <br>
+:balloon: **Step 2. Add the estimated distance (distance<sub>o</sup></sub>(i)) calculated by each solution to each target to get each solution. Total crowding distance CD(i)** <br>
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/10.png" width="200" height="130">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/10.png" width="200" height="130">
 </div>
 
 :bulb: Pseudo code
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/11.png" width="560" height="380">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/11.png" width="560" height="380">
 </div>
 
-### :arrow_down_small: 選擇機制 (Selection mechanism)
+### :arrow_down_small: Selection mechanism
 
-經由上述的過程，最終 population 內的每條染色體(解)，皆擁有兩個屬性:
-- 非凌越層級 (nondomination rank)
-- 擁擠距離 (crowding distance)
+Through the above process, each chromosome (solution) in the final population has two attributes:
+- non-linggrade level (nondomination rank)
+- Crowding distance
 
-最後再挑選新的 population 成員時，則會依照下列規則進行挑選:
-1. 先比較每個解的非凌越層級，**有越高層級的解(數字較小)，具有越高的被優先選擇權**
-2. 若兩個解的非凌越層級相同，則比較擁擠距離，**擁擠距離越大有越高的被優先選擇權**
+When you finally pick a new population member, you will pick it according to the following rules:
+1. Compare the non-improvement level of each solution first, ** the higher level solution (the smaller number), the higher the priority is selected**
+2. If the non-upgrade levels of the two solutions are the same, compare the crowded distance, ** the larger the crowded distance, the higher the priority is selected**
 
-## :black_nib: 總結
-最後透過下面的 gif 圖，統整 NSGA-II 的整個流程，對於每一次迭代皆會進行下面的動作，直到所設定的條件到達為止:
+## :black_nib: Summary
+Finally, through the following gif diagram, the entire process of NSGA-II is integrated. For each iteration, the following actions will be performed until the set conditions are reached:
 
-1. 首先有一初始的人口(親代) P<sub>t</sup></sub> 內含 N 個染色體，經由突變及交配後產生子代 Q<sub>t</sup></sub> 。
-2. 由於採用菁英策略，因此將親代與子代一同保留下來，進行挑選。
-3. 接著進行非凌越排序，以得到每個解的非凌越層級 (F<sub>1</sup></sub><層級1>、F<sub>2</sup></sub><層級2>.....)。
-4. 最後挑選新的 N 個染色體當成下一次迭代的人口，先依照非凌越層級高低來選擇，若發生如下圖所示的，剩餘要挑選進入新人口的染色體數小於下一個要被選擇的非凌越層級內的染色體的數，則透過擁擠距離來進行挑選，選擇擁擠距離較大者進入新的人口。
-5. 最終產生新的人口 P<sub>t+1</sup></sub> ，進入下一次迭代，重複上述流程。
+1. First, there is an initial population (parental) P<sub>t</sup></sub> containing N chromosomes, which are produced by mutation and mating to produce progeny Q<sub>t</sup></sub > .
+2. Due to the adoption of the elite strategy, the parent and the offspring are retained together for selection.
+3. Then perform non-overlapping sorting to get the non-overlapping level of each solution (F<sub>1</sup></sub><level 1>, F<sub>2</sup></sub ><level 2>.....).
+4. Finally, select the new N chromosomes as the population of the next iteration, first select according to the level of non-imperial hierarchy. If the following picture shows, the number of chromosomes remaining to be selected into the new population is smaller than the next one to be selected. The number of chromosomes in the non-over-the-level hierarchy is selected by the crowded distance, and the larger the crowded distance is selected to enter the new population.
+5. Finally, generate a new population P<sub>t+1</sup></sub> and proceed to the next iteration to repeat the above process.
 
-![](https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/123.gif)
+![](https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/ NSGA-II/Picture/123.gif)
 
 ### :black_nib: Reference
-- [K.Deb, A.Pratap, S.Agarwal, T.Meyarivan, A Fast and Elitist Multiobjective Genetic Algorithm: NSGA-II,IEEE Trans. Evol. Comput.6(2)(2002)182](https://ieeexplore.ieee.org/document/996017/) <br>
-- [Wu, Min-You, Multi-Objective Stochastic Scheduling Optimization: A Study of Auto Parts Manufacturer in Taiwan](https://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22104NCKU5621001%22.&searchmode=basic)
+- [K. Deb, A. Pratap, S. Agarwal, T. Meyarivan, A Fast and Elitist Multiobjective Genetic Algorithm: NSGA-II, IEEE Trans. Evol. Comput. 6(2) (2002) 182] (https:/ /ieeexplore.ieee.org/document/996017/) <br>
+- [Wu, Min-You, Multi-Objective Stochastic Scheduling Optimization: A Study of Auto Parts Manufacturer in Taiwan] (https://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s =id=%22104NCKU5621001%22.&searchmode=basic)
