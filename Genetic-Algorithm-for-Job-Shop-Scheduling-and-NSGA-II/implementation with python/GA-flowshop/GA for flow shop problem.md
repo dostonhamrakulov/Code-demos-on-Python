@@ -15,7 +15,7 @@ To put it simply, the flow shop problem is that there are n workpieces and m mac
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/1 .png" width="450" ​​height="180">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/1 .png" width="450" ​​height="180">
 </div>
 <br>
 
@@ -24,7 +24,7 @@ Job 1->Job 2->Job 3, so you can get the Gantt chart as shown in the lower right 
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/2 .png" width="570" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/2 .png" width="570" height="250">
 </div>
 <br>
 
@@ -33,7 +33,7 @@ This example is a single-machine flow shop problem with 20 workpieces. The sched
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/3 .png" width="650" height="180">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/3 .png" width="650" height="180">
 </div>
 <br>
 
@@ -50,7 +50,7 @@ w<sub>i</sup></sub>: Weight of artifact i >
 
 - Calculate the sum of the weighted delay times of all the workpieces. From the formula we can know that when the weight of the workpiece is larger, we should complete those workpieces with larger weights as soon as possible, otherwise the total weighted delay time will be too large. In terms of scheduling goals, this is not a good schedule.
 
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/4 .png" width="80" height="60">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/4 .png" width="80" height="60">
 
 In addition, there is another version of the flow shop program. The main difference with this article is the difference in the solution target. The other version aims to minimize the total idle time (Idle time), which is the example Gantt chart above. The part of the gray area, which is expected to be discharged, can minimize the idle time of the main machine.
 
@@ -65,7 +65,7 @@ Chromosome 2 => [4,2,0,1,3] <br>
 
 ## :black_nib: Program Description <br>
 
-This is mainly for the important blocks in the program. Some details are not included. Please refer to [Complete Code] if necessary (https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop -Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/GA_flowshop_tardyjob.py) or [sample file] ((https://wurmen.github.io/Genetic-Algorithm-for- Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/Example.html))
+This is mainly for the important blocks in the program. Some details are not included. Please refer to [Complete Code] if necessary (https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop -Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/GA_flowshop_tardyjob.py) or [sample file] ((https://wurmen.github.io/Genetic-Algorithm-for- Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/Example.html))
 
 ### :arrow_down_small: Import the required kits <br>
 
@@ -118,7 +118,7 @@ For i in range(population_size):
 3. 將 parent 2 與child2不重複的工件，依序填入 Child 2 剩餘的位置，形成新的子代。 Child 1 的形成方式如 Child 2 所示。
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/5.png" width="400" height="325">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/5.png" width="400" height="325">
 </div>
 <br>
 
@@ -127,7 +127,7 @@ For i in range(population_size):
 	parent_list=copy.deepcopy(population_list)
     offspring_list=copy.deepcopy(population_list)
     S=list(np.random.permutation(population_size)) # generate a random sequence to select the parent chromosome to crossover
-    
+
     for m in range(int(population_size/2)):
         crossover_prob=np.random.rand()
         if crossover_rate>=crossover_prob:
@@ -137,13 +137,13 @@ For i in range(population_size):
             child_2=['na' for i in range(num_job)]
             fix_num=round(num_job/2)
             g_fix=list(np.random.choice(num_job, fix_num, replace=False))
-            
+
             for g in range(fix_num):
                 child_1[g_fix[g]]=parent_2[g_fix[g]]
                 child_2[g_fix[g]]=parent_1[g_fix[g]]
             c1=[parent_1[i] for i in range(num_job) if parent_1[i] not in child_1]
             c2=[parent_2[i] for i in range(num_job) if parent_2[i] not in child_2]
-            
+
             for i in range(num_job-fix_num):
                 child_1[child_1.index('na')]=c1[i]
                 child_2[child_2.index('na')]=c2[i]
@@ -157,7 +157,7 @@ For i in range(population_size):
 3. 進行基因移轉，移轉方式如圖所示。
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6.png" width="450" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6.png" width="450" height="250">
 </div>
 <br>
 
@@ -170,7 +170,7 @@ For i in range(population_size):
             t_value_last=offspring_list[m][m_chg[0]] # save the value which is on the first mutation position
             for i in range(num_mutation_jobs-1):
                 offspring_list[m][m_chg[i]]=offspring_list[m][m_chg[i+1]] # displacement
-            
+
             offspring_list[m][m_chg[num_mutation_jobs-1]]=t_value_last # move the value of the first mutation position to the last mutation position
 ```
 ### :arrow_down_small: 適應值計算 <br>
@@ -196,7 +196,7 @@ For i in range(population_size):
 ```python
     '''----------selection----------'''
     pk,qk=[],[]
-    
+
     for i in range(population_size*2):
         pk.append(chrom_fitness[i]/total_fitness)
     for i in range(population_size*2):
@@ -204,16 +204,16 @@ For i in range(population_size):
         for j in range(0,i+1):
             cumulative=cumulative+pk[j]
         qk.append(cumulative)
-    
+
     selection_rand=[np.random.rand() for i in range(population_size)]
-    
+
     for i in range(population_size):
         if selection_rand[i]<=qk[0]:
 			population_list[i]=copy.deepcopy(total_chromosome[0])
         else:
             for j in range(0,population_size*2-1):
                 if selection_rand[i]>qk[j] and selection_rand[i]<=qk[j+1]:
-					population_list[i]=copy.deepcopy(total_chromosome[j+1]) 
+					population_list[i]=copy.deepcopy(total_chromosome[j+1])
                     break
 ```
 
@@ -225,11 +225,11 @@ For i in range(population_size):
         if chrom_fit[i]<Tbest_now:
             Tbest_now=chrom_fit[i]
 			sequence_now=copy.deepcopy(total_chromosome[i])
-    
+
     if Tbest_now<=Tbest:
         Tbest=Tbest_now
 		sequence_best=copy.deepcopy(sequence_now)
-    
+
     job_sequence_ptime=0
     num_tardy=0
     for k in range(num_job):
@@ -244,7 +244,7 @@ This method is to mutate by means of gene displacement, and the mutation method 
 3. Perform gene transfer and transfer as shown.
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6 .png" width="450" ​​height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6 .png" width="450" ​​height="250">
 </div>
 <br>
 
@@ -352,7 +352,7 @@ for i in sequence_best:
    gen_t=int(p[i])
    j_count[i]=j_count[i]+gen_t
    m_count=m_count+gen_t
-   
+
    if m_count<j_count[i]:
        m_count=j_count[i]
    elif m_count>j_count[i]:
@@ -361,7 +361,7 @@ for i in sequence_best:
 
    end_time=str(datetime.timedelta(seconds=j_count[i]))
    j_record[i]=[start_time,end_time]
-       
+
 
 df=[]
 for j in j_keys:
@@ -375,5 +375,5 @@ fig = ff.create_gantt(df, colors=['#008B00','#FF8C00','#E3CF57','#0000CD','#7AC5
 py.iplot(fig, filename='GA_flow_shop_scheduling_tardyjob', world_readable=True)
 ```
 ## :black_nib: Reference <br>
-- António Ferrolho and Manuel Crisóstomo. “Single Machine Total Weighted Tardiness Problem with Genetic Algorithms” 
+- António Ferrolho and Manuel Crisóstomo. “Single Machine Total Weighted Tardiness Problem with Genetic Algorithms”
 - N. Liu, Mohamed A. Abdelrahman, and Snni Ramaswamy. “A Genetic Algorithm for the Single Machine Total Weighted Tardiness Problem”

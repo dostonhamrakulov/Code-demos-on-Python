@@ -13,7 +13,7 @@ Gene algorithm can be used to solve most optimization problems, and this topic f
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/12.png" width=" 425" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/12.png" width=" 425" height="300">
 </div>
 <br>
 
@@ -24,7 +24,7 @@ The figure below shows the flow chart of GA. Next, each step will be explained.
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/14.png" width=" 600" height="500">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/14.png" width=" 600" height="500">
 </div>
 <br>
 
@@ -34,7 +34,7 @@ GA during the entire execution, will run on alternating ** ** ** called code spa
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/11.png" width=" 700" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/11.png" width=" 700" height="300">
 </div>
 <br>
 
@@ -46,7 +46,7 @@ There are many ways to encode chromosomes. The most common encoding method is Bi
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/13.png" width=" 450" height="150">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/13.png" width=" 450" height="150">
 </div>
 <br>
 
@@ -65,7 +65,7 @@ Since the integers from 0 to 255 are all possible to solve, in order to represen
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/2.png" width=" 550" height="475">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/2.png" width=" 550" height="475">
 </div>
 <br>
 
@@ -89,7 +89,7 @@ When the chromosome design is completed, it will formally enter the main body of
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/3.png" width=" 400" height="285">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/3.png" width=" 400" height="285">
 </div>
 <br>
 
@@ -111,7 +111,7 @@ There are many ways to mate, and the three common mating methods are described b
 Randomly select a gene position as a transaction point, and cut the parent chromosome into two segments with this gene position, then fix one segment and exchange another segment to generate two new children.
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/4.png" width=" 450" height="355">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/4.png" width=" 450" height="355">
 </div>
 <br>
 
@@ -121,7 +121,7 @@ The concept of multi-point mating is similar to that of single-point mating. It 
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/5.png" width=" 450" height="355">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/5.png" width=" 450" height="355">
 </div>
 <br>
 
@@ -131,7 +131,7 @@ Uniform mating is to randomly generate a binary code equal to the length of the 
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/6.png" width=" 460" height="325">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/6.png" width=" 460" height="325">
 </div>
 <br>
 
@@ -145,7 +145,7 @@ Uniform mating is to randomly generate a binary code equal to the length of the 
 In order to increase the diversity of the solution and avoid falling into the local solution, for each chromosome, it is determined whether a certain chromosome is to be mutated according to the set mutation rate, and the gene in a single chromosome is changed in a random manner, a common The method is to exchange several genes in a randomly selected chromosome for a single chromosome, as shown in the following figure:
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/7.png" width=" 445" height="225">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/7.png" width=" 445" height="225">
 </div>
 <br>
 
@@ -182,7 +182,7 @@ The concept of the roulette method can be imagined as a darts game. First, we wi
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/14.gif" width=" 445" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/14.gif" width=" 445" height="250">
 </div>
 <br>
 
@@ -190,15 +190,15 @@ The concept of the roulette method can be imagined as a darts game. First, we wi
 
 :balloon: Step 1. Calculate the sum of the fitness values ​​of all chromosomes to be selected F
 
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/8.png" width=" 250" height="115">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/8.png" width=" 250" height="115">
 
 :balloon: Step 2. For each chromosome v<sub>k</sup></sub>, calculate the probability of selection p<sub>k</sup></sub>
 
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/9.png" width=" 360" height="50">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/9.png" width=" 360" height="50">
 
 :balloon: Step 3. For each chromosome v<sub>k</sup></sub>, calculate its cumulative probability q<sub>k</sup></sub>
 
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/GA/picture/10.png" width=" 450" height="70">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/picture/10.png" width=" 450" height="70">
 
 :balloon: Step 4. From the interval [ 0 , 1 ], randomly generate a number r
 

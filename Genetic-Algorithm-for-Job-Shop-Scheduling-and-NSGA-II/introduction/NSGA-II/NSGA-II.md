@@ -14,7 +14,7 @@ Let's take a simple example to illustrate this concept. Suppose there are four p
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/1.png" width="550" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//NSGA-II/Picture/1.png" width="550" height="250">
 </div>
 <br>
 
@@ -25,7 +25,7 @@ The architecture of NSGE-II is shown in the figure below. As mentioned in the in
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/2.png" width="550" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/2.png" width="550" height="350">
 </div>
 <br>
 
@@ -43,7 +43,7 @@ Compared to the original NSGA, NSGA-II proposes a faster non-over-ordering metho
 
 It can be clearly seen from the image on the right that the solution A has over all the solutions, so S<sub>A</sup></sub>={B, C, D} and n<sub>A</ Sup></sub>=0; B is only given to Ling by A, and Ling knows D, so n<sub>B</sup></sub>=1, S<sub>B</sup>< /sub>={D}, others and so on...
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/3.png" width="600" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//Picture/3.png" width="600" height="300">
 </div>
 
 :balloon: **Step 2. Find the members of the first nondominated front: (n<sub>p</sup></sub>= 0** <br>
@@ -51,13 +51,13 @@ It can be clearly seen from the image on the right that the solution A has over 
 Through the previous step, we can get a list of the relationship between each solution and other solutions. Then we will classify these solutions to facilitate the final selection of chromosomes (solutions). The concept is as shown in the following figure. The Lingyue relationship table divides the solutions into different levels. The non-linger solution of the first layer has the highest level (that is, the Platonic front solution), while the second layer has the second highest level, and so on. The higher the priority is selected as the new population (population)
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/4.png" width="325" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//Picture/4.png" width="325" height="250">
 </div>
 
 Therefore, in the beginning, we must first find the first layer of the first solution, that is, the solution of n<sub>p</sup></sub>= 0 in the table formed in the previous step, in this case, the solution A. And the solution on the blue line, and give these solutions a rank of 1.
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/5.png" width="300" height="175">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//Picture/5.png" width="300" height="175">
 </div>
 <br>
 
@@ -70,7 +70,7 @@ From Step 2, we know that the solution of n<sub>p</sup></sub>= 0 is only A, and 
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/6.png" width="300" height="175">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//Picture/6.png" width="300" height="175">
 </div>
 <br>
 :balloon: **Step 5. Repeat the above steps until all leading edges are recognized**<br>
@@ -79,7 +79,7 @@ From Step 2, we know that the solution of n<sub>p</sup></sub>= 0 is only A, and 
 :bulb: Pseudo code
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/7.png" width="450" ​​height="500">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//Picture/7.png" width="450" ​​height="500">
 </div>
 
 ### :arrow_down_small: Crowding distance (Crowding-distance)
@@ -87,7 +87,7 @@ From Step 2, we know that the solution of n<sub>p</sup></sub>= 0 is only A, and 
 In order to maintain the diversity of solutions and to make choices when different solutions are located at the same non-linger level, a method of crowding distance is proposed to evaluate the density relationship between each solution in the group and its surrounding solutions. The concept is as follows: As shown, when we calculate the crowded distance of a particular solution, we follow the non-over the leading edge of the solution, and find the two adjacent solutions that are closest to the specific solution along each target in the leading edge. To calculate the average distance between the two solutions, and finally sum the distances calculated by each target to obtain the crowded distance of the specific solution. In the dual-target example of the following figure, the crowded distance of the i-th solution at its leading edge is the average side length of the rectangle enclosed by the two solutions closest to the solution i.
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/8.png" width="500" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//Picture/8.png" width="500" height="350">
 </div>
 
 As mentioned in the previous paragraph, calculating the crowded distance helps to maintain the diversity of the solution, which means that when a solution is to be selected from a group of solutions located at the same non-over the leading edge, ** tends to choose a crowded distance. The big solution **, because the congestion distance is larger, indicating that the solution is more different from other solutions, which helps to avoid the situation of falling into the local solution during the iterative process of the algorithm, and to achieve exploration (exploration) The effect is expected to find more and better solutions, and the congestion distance is calculated in detail as follows:<br>
@@ -95,7 +95,7 @@ As mentioned in the previous paragraph, calculating the crowded distance helps t
 :balloon: **Step 1. Sort each target's solution from small to large, and calculate each solution by the following formula. The estimated distance of each target is distance<sub>o</sup></sub> (i)**<br>
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/9.png" width="360" height="130">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//Picture/9.png" width="360" height="130">
 </div>
 
 o indicates the target, F<sub>o</sup></sub>(i) is the ith solution after sorting the target O, F<sub>o,max</sup></sub> is the maximum boundary solution , F<sub>o,min</sup></sub> is the minimum boundary solution<br>
@@ -106,13 +106,13 @@ o indicates the target, F<sub>o</sup></sub>(i) is the ith solution after sorting
 :balloon: **Step 2. Add the estimated distance (distance<sub>o</sup></sub>(i)) calculated by each solution to each target to get each solution. Total crowding distance CD(i)** <br>
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/10.png" width="200" height="130">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//Picture/10.png" width="200" height="130">
 </div>
 
 :bulb: Pseudo code
 
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction /NSGA-II/Picture/11.png" width="560" height="380">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II//Picture/11.png" width="560" height="380">
 </div>
 
 ### :arrow_down_small: Selection mechanism
