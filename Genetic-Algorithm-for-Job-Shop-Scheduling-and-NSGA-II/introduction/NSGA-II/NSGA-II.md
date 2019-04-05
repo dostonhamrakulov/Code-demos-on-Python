@@ -1,20 +1,20 @@
-# Nondominated Sorting Genetic Algorithm II (NSGA-II) 
+# Nondominated Sorting Genetic Algorithm II (NSGA-II)
 *POLab* <br>
 *[cheng-man wu](https://www.linkedin.com/in/chengmanwu/)*<br>
 *2018/06/12*
 <br>
-## :black_nib: 前言 
+## :black_nib: 前言
 上一篇文章介紹了什麼是基因演算法 (GA)，而本文介紹的非凌越排序基因演算法 (NSGA-II) 由 NSGA 改良而來，是 K.Deb, A.Pratap, S.Agarwal, T.Meyarivan 於 2002 年所提出，該演算法的架構與 GA 相似，但專門被用來求解具有多目標的問題，因此本篇文章將要介紹何謂 NSGA-II ，並在最後透過 PYTHON 來進行實作，求解具有雙目標的排程 Jop Shop 問題。
 <br>
 
-## :black_nib: "凌越 (dominated) "的概念是什麼? 
+## :black_nib: "凌越 (dominated) "的概念是什麼?
 一般而言，在單目標問題中，我們可以很容易的判斷什麼是最佳解，哪些解叫好，哪些叫壞，但當我們遇到多目標問題時，解的品質就不是那麼容易判斷了，尤其是目標之間具有衝突時，因此，在多目標問題中會透過"凌越"的概念來判斷一個解的好壞。<br>
 
 我們舉一個簡單的例子來說明此概念，假設現在有四個人想跟我做朋友，他們各自的薪水及身高如左下表所示，而我的交友條件有兩個目標-身高及薪水，也就是我希望所交到的朋友身高與薪水越高越好，因此這兩個目標皆為最大化問題。從表中可以發現， A 不管再身高或薪水都表現比其他人好，所以我們稱A凌越其他所有解，以數學符號表示為 A≻B、C、D ，而A在該問題中又可被稱為非凌越解 (non-dominated solution) ，另外， B 與 C 在身高及薪水上，各有其優勢，因此這兩個解互不凌越， D 不管再身高還是薪水都劣於其他人，所以 D 被所有人凌越，也就是 A≻D、B≻D，C≻D 。<br>
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/1.png" width="550" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/1.png" width="550" height="250">
 </div>
 <br>
 
@@ -25,7 +25,7 @@ NSGE-II 的架構如下圖所示，如同前言所提，它的架構與 GA 相�
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/2.png" width="550" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/2.png" width="550" height="350">
 </div>
 <br>
 
@@ -43,7 +43,7 @@ NSGE-II 的架構如下圖所示，如同前言所提，它的架構與 GA 相�
 
 從右圖中可以很清楚的看到，解 A 凌越了所有解，因此 S<sub>A</sup></sub>={B、C、D} ，而 n<sub>A</sup></sub>=0 ； B 僅被 A 給凌越，且凌越了解 D ，所以 n<sub>B</sup></sub>=1 、 S<sub>B</sup></sub>={D} ，其它以此類推......
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/3.png" width="600" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/3.png" width="600" height="300">
 </div>
 
 :balloon: **Step 2. 找出第一組非凌越前緣的成員 (Finding the members of the first nondominated front) ：n<sub>p</sup></sub>= 0** <br>
@@ -51,13 +51,13 @@ NSGE-II 的架構如下圖所示，如同前言所提，它的架構與 GA 相�
 經由上個步驟我們可以得到每個解與其它解的凌越關係表，接著我們要將這些解進行分級，以利作為最終選擇染色體(解)的指標，其概念如下圖所示，我們會透過凌越關係表，將這些解分成不同的 level ，第一層的非凌越解具有最高層級(也就是柏拉圖前緣解)，而第二層具有次高層級，以此類推，層級越高具有越高的優先權被選擇成為新的人口 (population)
 
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/4.png" width="325" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/4.png" width="325" height="250">
 </div>
 
 因此，一開始要先找出第一層優先解，也就是在上一步驟形成的表中 n<sub>p</sup></sub>= 0 的解，在此例中即為解A和位於藍色線上的解，並給予這些解的排序等級為1。
 
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/5.png" width="300" height="175">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/5.png" width="300" height="175">
 </div>
 <br>
 
@@ -70,7 +70,7 @@ NSGE-II 的架構如下圖所示，如同前言所提，它的架構與 GA 相�
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/6.png" width="300" height="175">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/6.png" width="300" height="175">
 </div>
 <br>
 
@@ -80,7 +80,7 @@ NSGE-II 的架構如下圖所示，如同前言所提，它的架構與 GA 相�
 :bulb: Pseudo code
 
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/7.png" width="450" height="500">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/7.png" width="450" height="500">
 </div>
 
 ### :arrow_down_small: 擁擠距離 (Crowding-distance)
@@ -88,7 +88,7 @@ NSGE-II 的架構如下圖所示，如同前言所提，它的架構與 GA 相�
 為了保持解的多樣性，以及當不同解位於同樣的非凌越層級時能做出選擇，這裡提出了擁擠距離的方法，來評估群體中每個解與其周圍解的密度關係，其概念如下圖所示，再算一個特定解的擁擠距離時，我們會循著該解位於的非凌越前緣上，在此前緣中沿著每個目標找出距離該特定解左右最近的兩個相鄰解，去計算這兩個解的平均距離，最後將每個目標算出來的距離進行加總，即得到該特定解的擁擠距離。以下圖的雙目標例子來說，第i個解在其前緣的擁擠距離，即是距離解i最近的兩個解所圍出來的長方形的平均邊長。
 
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/8.png" width="500" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/8.png" width="500" height="350">
 </div>
 
 如同上一段所提，計算擁擠距離有助於保持解的多樣性，該意思是指，當要從一群位於相同非凌越前緣的解，進行解的挑選時，**會傾向選擇擁擠距離較大的解**，因為擁擠距離越大，表示該解與其他解的差異性較大，這有助於後面演算法迭代的過程中，可以避免落入局部解的情形，而達到探索 (exploration) 的效果，以期望找到更多更好的解，而擁擠距離詳細的計算方式如下:<br>
@@ -96,7 +96,7 @@ NSGE-II 的架構如下圖所示，如同前言所提，它的架構與 GA 相�
 :balloon: **Step 1.將每個目標的解由小到大遞增排序，並透過下列公式算出每個解  i 在每個目標的評估距離 distance<sub>o</sup></sub>(i)**<br>
 
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/9.png" width="360" height="130">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/9.png" width="360" height="130">
 </div>
 
 o 表示目標、 F<sub>o</sup></sub>(i) 為目標 O 排序後的第 i 個解、 F<sub>o,max</sup></sub> 為最大邊界解、 F<sub>o,min</sup></sub> 為最小邊界解 <br>
@@ -107,13 +107,13 @@ o 表示目標、 F<sub>o</sup></sub>(i) 為目標 O 排序後的第 i 個解、
 :balloon: **Step 2.將每個解在每個目標所算出來的評估距離 (distance<sub>o</sup></sub>(i)) 進行加總，即可得到每個解的總擁擠距離 CD(i)** <br>
 
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/10.png" width="200" height="130">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/10.png" width="200" height="130">
 </div>
 
 :bulb: Pseudo code
 
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/11.png" width="560" height="380">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/11.png" width="560" height="380">
 </div>
 
 ### :arrow_down_small: 選擇機制 (Selection mechanism)
@@ -135,8 +135,8 @@ o 表示目標、 F<sub>o</sup></sub>(i) 為目標 O 排序後的第 i 個解、
 4. 最後挑選新的 N 個染色體當成下一次迭代的人口，先依照非凌越層級高低來選擇，若發生如下圖所示的，剩餘要挑選進入新人口的染色體數小於下一個要被選擇的非凌越層級內的染色體的數，則透過擁擠距離來進行挑選，選擇擁擠距離較大者進入新的人口。
 5. 最終產生新的人口 P<sub>t+1</sup></sub> ，進入下一次迭代，重複上述流程。
 
-![](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/123.gif)
+![](https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/123.gif)
 
-### :black_nib: Reference 
+### :black_nib: Reference
 - [K.Deb, A.Pratap, S.Agarwal, T.Meyarivan, A Fast and Elitist Multiobjective Genetic Algorithm: NSGA-II,IEEE Trans. Evol. Comput.6(2)(2002)182](https://ieeexplore.ieee.org/document/996017/) <br>
 - [Wu, Min-You, Multi-Objective Stochastic Scheduling Optimization: A Study of Auto Parts Manufacturer in Taiwan](https://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22104NCKU5621001%22.&searchmode=basic)
