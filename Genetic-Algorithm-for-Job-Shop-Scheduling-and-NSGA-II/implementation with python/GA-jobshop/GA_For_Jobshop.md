@@ -1,7 +1,5 @@
 # Solving Job shop scheduling problem with genetic algorithm
 
-*[POLab](http://polab.imis.ncku.edu.tw/)* <br>
-*[cheng-man wu](https://www.linkedin.com/in/chengmanwu)*<br>
 *2018/12/01*
 <br>
 
