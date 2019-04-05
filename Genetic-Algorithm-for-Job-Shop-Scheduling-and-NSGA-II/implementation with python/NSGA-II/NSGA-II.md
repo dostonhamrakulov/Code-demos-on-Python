@@ -1,62 +1,61 @@
 # Solving Job shop scheduling problem with Nondominated Sorting Genetic Algorithm II
 
-*POLab* <br>
-*[cheng-man wu](https://www.linkedin.com/in/chengmanwu)*<br>
+
 *2018/07/15*
 <br>
 
-## :black_nib: 問題描述 <br>
-本範例是一個 10x10 的 Jop shop 問題，共有10個工件與10台機台，此問題是個多目標排程問題，共有兩個目標分別為最小化總完工時間 (Makespan)及總加權提早時間及延遲時間 (Total weighted earliness and tardiness, TWET) ，工件資訊如下表所示，工件資訊是以工件的加工作業程序來呈現，每個工件都會經過10個加工作業，下表紀錄著工件在每一個加工作業程序的加工機台以及加工所需時間，另外還有每個工件的優先度及到期時間 (參考自 [Min-YouWu, 2016](https://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&s=id=%22104NCKU5621001%22.&searchmode=basic) )<br>
+## :black_nib: Description of the problem <br>
+This example is a 10x10 Jop shop problem, a total of 10 workpieces and 10 sets of machines, this problem is a multi-objective scheduling problem, a total of two targets are minimized total completion time (Makespan) and total weighted early time and delay time (total weighted Earliness and tardiness, TWET), the workpiece information is shown in the following table, the workpiece information is presented with the workpiece processing operating procedures, each workpiece will go through 10 machining operations, the following table records the workpiece in each processing operating procedures of the processing machine and processing time, There is also the priority and expiration time of each workpiece <br>
 
 - Processing time  
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/picture/1.png" width="650" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/picture/1.png" width="650" height="300">
 </div>
 <br>
 <br>
 
-- Machine sequence 
+- Machine sequence
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/picture/2.png" width="650" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/picture/2.png" width="650" height="300">
 </div>
 <br>
 
 -  Priority and Due date
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/picture/3.png" width="200" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/picture/3.png" width="200" height="300">
 </div>
 <br>
 
-### :arrow_down_small: 排程目標 <br>
+### :arrow_down_small: Scheduling target <br>
+This example is a multi-objective scheduling problem, with a total of two targets being the minimum total completion time (Makespan) and the total weighted early time and delay time (total weighted earliness and tardiness, TWET), which are conflict targets, makes The sooner Pan expects to be completed, the better, but TWET hopes that the better the completion time, the better, too early or too late to complete will give the penalty value, so there must be a trade-off between the two solutions.
+<br>
 
-本範例為多目標排程問題，共有兩個目標分別為最小化總完工時間 (Makespan)及總加權提早時間及延遲時間 (Total weighted earliness and tardiness, TWET) 
-，此兩個目標為衝突目標， makespan 期望越早完工越好，但 TWET 則希望完工時間越符合交期越好，太早或太晚完成都會給予懲罰值，因此必須在這兩個解之間做權衡。<br>
+### :arrow_down_small: Coding and decoding  <br>
+The encoding here is the same as the previous introduction of GA to solve the Job shop problem, mainly refer to [Gen-Tsujimura-Kubota ' s Method ()] (https://ieeexplore.ieee.org/document/400072/) proposed by the Job shop scheduling problem of the chromosome encoding method.<br>
 
-### :arrow_down_small: 編碼與解碼  <br>
-這裡的編碼方式與前面介紹 GA 求解 Job shop 問題相同，主要參考 [Gen-Tsujimura-Kubota’s Method (1994, 1997)](https://ieeexplore.ieee.org/document/400072/)所提出的 Job shop 排程問題的染色體編碼方式。<br>
 
-此方法的概念是將染色體表示為一組工件的作業加工程序，一個基因代表一個工件的加工作業，根據工件在染色體出現的次數，來得知各個工件目前的加工作業，再來對應各工件的加工機台及加工時間，藉此來進行排程。<br>
+The concept of this method is to represent the chromosome as a set of workpieces of the job processing program, a gene represents the processing of a workpiece, according to the number of chromosomes in the appearance of the workpiece, to know the current processing work of each workpiece, and then to correspond to the workpiece processing machine and processing time, in order to carry out the scheduling.<br>
 
-假設現在有一個具有 N 個工件 M 台機台的 Job shop 排程問題，那一個染色體將會由 N x M 個基因所組成，因為每個工件在每台機台只會被加工一次，共要被 M 台機台加工，所以每個工件在染色體裡將會出現 M 次，這裡舉上面3 x 3的 Job shop 問題為例<br>
+Assuming that there is now a Job shop scheduling problem with N workpiece M machine, that chromosome will consist of N x M genes, because each workpiece will only be processed once per machine, a total of M machine processing, so each workpiece in the chromosome will appear M times, here to lift the above 3 x 3 A case study of Job Shop<br>
 
-O<sub>ijk</sup></sub> 表示工件 i 在作業程序 j 使用第 k 台機台 
+O<sub>ijk</sup></sub>  Indicates that the workpiece I uses the K machine in the operating program J
 
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/5.png" width="780" height="420">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/5.png" width="780" height="420">
 </div>
 <br>
 
-## :black_nib: 程式說明 <br>
+## :black_nib: Description of the program <br>
 
-這裡主要針對程式中幾個重要區塊來說明，有些細節並無放入，如有需要請參考[完整程式碼](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/NSGA-II%20code.py)或[範例檔案](https://wurmen.github.io/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/Example_NSGAII.html)<br>
+Here mainly for a few important blocks in the program to explain, some details are not put in, if necessary please refer to [Complete program code](https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/NSGA-II/NSGA-II%20code.py)Or[Sample Archive](https://wurmen.github.io/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/Example_NSGAII.html)<br>
 
-:bulb:由於下列程式有三個主要函式，建議可自行 print 函式的輸入與輸出值，以利裡解函式的執行過程 
+:bulb:As the following procedures have three main functions, it is recommended that you can self-print function input and output values to facilitate the execution of the function of the solution  
 
-### :arrow_down_small: 導入所需套件 <br>
+### :arrow_down_small: Import the required Kits <br>
 
 ```python
 '''==========Solving job shop scheduling problem by gentic algorithm in python======='''
@@ -67,8 +66,8 @@ import time
 import copy
 ```
 
-### :arrow_down_small: 初始設定 <br>
-此區主要包含讀檔或是資料給定，以及一些參數上的設定
+### :arrow_down_small: Initial settings <br>
+This area mainly contains read files or data given, as well as some parameters on the settings
 ```python
 ''' ================= initialization setting ======================'''
 num_job=10 # number of jobs
@@ -94,9 +93,9 @@ job_priority_duedate=[list(job_priority_duedate_tmp.iloc[i]) for i in range(num_
 start_time = time.time()
 
 ```
-### :arrow_down_small: 非凌越排序函式 <br>
-- 此函式有兩個輸入-族群大小及族群內各染色體的兩個適應值 (makespan and TWET)，此兩個值紀錄於 chroms_obj_record 字典中
-- 輸出各個前緣所包含的染色體 index
+### :arrow_down_small: Non-atom sort function <br>
+- This function has two input-population size and two adaptive values for each chromosome in the population (Makespan and TWET), both of which are recorded in the Chroms_obj_record dictionary
+-  Output the chromosomes contained in each leading edge index
 ```python
 '''-------non-dominated sorting function-------'''      
 def non_dominated_sorting(population_size,chroms_obj_record):
@@ -107,7 +106,7 @@ def non_dominated_sorting(population_size,chroms_obj_record):
         s[p]=[]
         n[p]=0
         for q in range(population_size*2):
-            
+
             if ((chroms_obj_record[p][0]<chroms_obj_record[q][0] and chroms_obj_record[p][1]<chroms_obj_record[q][1]) or (chroms_obj_record[p][0]<=chroms_obj_record[q][0] and chroms_obj_record[p][1]<chroms_obj_record[q][1])
             or (chroms_obj_record[p][0]<chroms_obj_record[q][0] and chroms_obj_record[p][1]<=chroms_obj_record[q][1])):
                 if q not in s[p]:
@@ -119,7 +118,7 @@ def non_dominated_sorting(population_size,chroms_obj_record):
             rank[p]=0
             if p not in front[0]:
                 front[0].append(p)
-    
+
     i=0
     while (front[i]!=[]):
         Q=[]
@@ -132,17 +131,17 @@ def non_dominated_sorting(population_size,chroms_obj_record):
                         Q.append(q)
         i=i+1
         front[i]=Q
-                
+
     del front[len(front)-1]
     return front
 ```
-### :arrow_down_small: 計算擁擠距離的函式 <br>
-- 輸入：要被計算的前緣內含的染色體 index 、目前所有染色體的適應值 (可透過前者輸入的index去抓要被計算染色體的適應值)
-- 輸出：被計算染色體的擁擠距離
+### :arrow_down_small: A function that calculates a crowded distance <br>
+- Input: The chromosome index contained in the leading edge to be calculated, the adaptive value of all chromosomes at present (the adaptive value of the chromosome to be calculated can be grasped through the index entered by the former)
+- Output: The crowded distance of the chromosome being calculated
 ```python
 '''--------calculate crowding distance function---------'''
 def calculate_crowding_distance(front,chroms_obj_record):
-    
+
     distance={m:0 for m in front}
     for o in range(2):
         obj={m:chroms_obj_record[m][o] for m in front}
@@ -153,13 +152,13 @@ def calculate_crowding_distance(front,chroms_obj_record):
                 distance[sorted_keys[i]]=distance[sorted_keys[i]]
             else:
                 distance[sorted_keys[i]]=distance[sorted_keys[i]]+(obj[sorted_keys[i+1]]-obj[sorted_keys[i-1]])/(obj[sorted_keys[len(front)-1]]-obj[sorted_keys[0]])
-            
-    return distance 
+
+    return distance
 ```
-### :arrow_down_small: 選擇函式 <br>
-此函式內部會呼叫計算擁擠距離的函式 (calculate_crowding_distance)，因為在選擇染色體形成新族群的過程中，當剩餘要被挑選的染色體數，小於當前的凌越前緣內的染色體數時，就必須透過擁擠距離來判斷我要選擇哪一條染色體。<br>
-- 輸入：族群大小、由非凌越函式得到的各前緣內含的染色體 index、要被選擇的所有染色體的適應值以及各染色體的排程結果 list
-- 輸出：新的族群 list 及 族群內在原本族群 list 中的 index 
+### :arrow_down_small: Select a function <br>
+A function (calculate_crowding_distance) is called inside this function to calculate the crowding distance, because in the process of selecting chromosomes to form a new population, when the number of chromosomes to be selected is less than the number of chromosomes in the current edge of the atom, You have to tell which chromosome I'm going to choose through a crowded distance.<br>
+- Input: The size of the population, the chromosome index contained in the front edges obtained by the non-in function, the adaptive value of all chromosomes to be selected, and the scheduling results of each chromosome list
+- Output: The new ethnic list and the index in the list of the original ethnic groups within the ethnic group
 ```python
 '''----------selection----------'''
 def selection(population_size,front,chroms_obj_record,total_chromosome):   
@@ -179,16 +178,16 @@ def selection(population_size,front,chroms_obj_record,total_chromosome):
                 break
             else:
                 new_pop.extend(front[i])
-    
+
     population_list=[]
     for n in new_pop:
         population_list.append(total_chromosome[n])
-    
+
     return population_list,new_pop
 ```
-### :arrow_down_small: 產生初始解 <br>
+### :arrow_down_small: Generate an initial solution <br>
 
-根據上述所設定的族群大小，透過隨機的方式，產生初始族群，每個染色體共有 10 x 10 = 100  個基因，每一個染色體由一個 list 來儲存
+Depending on the size of the population set above, the initial population is produced in a random manner, with a total of 10 = 100 genes per chromosome, each of which is stored by a list
 
 ```python
 '''----- generate initial population -----'''
@@ -202,31 +201,31 @@ for i in range(population_size):
 
 ```
 
-### :arrow_down_small: 交配 <br>
-這裡採用雙點交配法，一開始會先產生一組用來選擇親代染色體的隨機序列，接著從序列中，兩個兩個抓出來，根據交配率來決定是否要進行交配，如果要，則交配產生兩個子代，並取代原本的親代染色體
+### :arrow_down_small: Mating <br>
+A two-point mating method is used to initially produce a set of random sequences used to select the parental chromosome, followed by two two in the sequence, to decide whether to mate according to the mating rate, and, if so, to mate to produce two offspring and replace the original parental chromosome
 ```python
     '''-------- two point crossover --------'''
     parent_list=copy.deepcopy(population_list)
     offspring_list=[]
     S=list(np.random.permutation(population_size)) # generate a random sequence to select the parent chromosome to crossover
-    
+
     for m in range(int(population_size/2)):
-        
+
         parent_1= population_list[S[2*m]][:]
         parent_2= population_list[S[2*m+1]][:]
         child_1=parent_1[:]
         child_2=parent_2[:]
-        
+
         cutpoint=list(np.random.choice(num_job*num_mc, 2, replace=False))
         cutpoint.sort()
-    
+
         child_1[cutpoint[0]:cutpoint[1]]=parent_2[cutpoint[0]:cutpoint[1]]
         child_2[cutpoint[0]:cutpoint[1]]=parent_1[cutpoint[0]:cutpoint[1]]
-        
+
         offspring_list.extend((child_1,child_2)) # append child chromosome to offspring list
 ```
-### :arrow_down_small: 修復 <br>
-本範例是一個 10 x 10 的 Job shop 問題，因此每個工件在染色體出現的次數為10次，但由於上面進行交配的動作，會導致有些染色體內的工件出現次數會小於10或大於10，而形成一個不可行的排程解，所以這裡必須針對不可行的染色體進行修復動作，使它成為一個可行排程
+### :arrow_down_small: Repair <br>
+This example is a Job shop problem with 10 x 10，As a result, each workpiece appears 10 times in chromosomes, but because of the mating action above, it will cause the number of workpieces in some chromosomes to appear less than 10 or greater than 10, resulting in an unworkable scheduling solution, so this must be done for the unworkable chromosome repair action, so that it becomes a feasible schedule
 
 ```python
     '''----------repairment-------------'''
@@ -245,7 +244,7 @@ for i in range(population_size):
                 larger.append(i)
             elif count<num_mc:
                 less.append(i)
-                
+
         for k in range(len(larger)):
             chg_job=larger[k]
             while job_count[chg_job][0]>num_mc:
@@ -256,17 +255,17 @@ for i in range(population_size):
                         job_count[chg_job][0]=job_count[chg_job][0]-1
                         job_count[less[d]][0]=job_count[less[d]][0]+1                    
                     if job_count[chg_job][0]==num_mc:
-                        break 
+                        break
 ```
-### :arrow_down_small: 突變 <br>
+### :arrow_down_small: Mutation <br>
 
-這裡採用的突變方式跟 [Flow shop](https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/GA%20for%20flow%20shop%20problem.md) 的例子相同，是透過基因位移的方式進行突變，突變方式如下:<br>
-1. 依據 mutation selection rate 決定染色體中有多少百分比的基因要進行突變，假設每條染色體有六個基因， mutation selection rate 為0.5，則有3個基因要進行突變。
-2. 隨機選定要位移的基因，假設選定5、2、6 (在此表示該位置下的基因要進行突變)
-3. 進行基因移轉，移轉方式如圖所示。
+The Mutant method used here [Flow shop](https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/GA%20for%20flow%20shop%20problem.md) The same example is the mutation through the way of gene displacement, which is mutated in the following ways:<br>1. According to mutation selection rate determines how many percentages of genes in chromosomes are mutated, assuming that each chromosome has six genes and mutation selection rate 0.5, 3 genes are mutated.
+
+2. Randomly select the gene to be displaced, assuming that 5, 2, 6 are selected (in this case, the gene at that position is mutated)
+3. Gene transfer, the way of transfer as shown in the figure.
 <br>
 <div align=center>
-<img src="https://github.com/wurmen/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6.png" width="450" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6.png" width="450" height="250">
 </div>
 <br>
 
@@ -279,13 +278,13 @@ for i in range(population_size):
             t_value_last=offspring_list[m][m_chg[0]] # save the value which is on the first mutation position
             for i in range(num_mutation_jobs-1):
                 offspring_list[m][m_chg[i]]=offspring_list[m][m_chg[i+1]] # displacement
-            
+
             offspring_list[m][m_chg[num_mutation_jobs-1]]=t_value_last # move the value of the first mutation position to the last mutation position   
-  
+
 ```
-### :arrow_down_small: 適應值計算 <br>
-- 計算每個染色體的兩個目標值- makespan and TWET
-- 這裡會將親代 (parent_list) 與子代 (offspring_list) 合併成一個大的list (total_chromosome)，後續選擇時是從這個大 list 來進行選擇，產生新族群
+### :arrow_down_small: Adaptive value Calculation <br>
+-  Calculate two target values per chromosome - makespan and TWET
+- The parental (parent_list) and The Offspring (Offspring_list) are merged into a large list (total_chromosome), followed by a selection from this large list to create a new ethnic group
 ```python
      '''--------fitness value(calculate  makespan and TWET)-------------'''
     total_chromosome=copy.deepcopy(parent_list)+copy.deepcopy(offspring_list) # combine parent and offspring chromosomes
@@ -297,20 +296,20 @@ for i in range(population_size):
         m_keys=[j+1 for j in range(num_mc)]
         m_count={key:0 for key in m_keys}
         d_record={} # record jobs earliness and tardiness time as d_record={job:[earliness time,tardiness time]}
-        
+
         for i in total_chromosome[m]:
             gen_t=int(pt[i][key_count[i]])
             gen_m=int(ms[i][key_count[i]])
             j_count[i]=j_count[i]+gen_t
             m_count[gen_m]=m_count[gen_m]+gen_t
-            
+
             if m_count[gen_m]<j_count[i]:
                 m_count[gen_m]=j_count[i]
             elif m_count[gen_m]>j_count[i]:
                 j_count[i]=m_count[gen_m]
-            
+
             key_count[i]=key_count[i]+1
-    
+
         for j in j_keys:
             if j_count[j]>job_priority_duedate[j][1]:
                 job_tardiness=j_count[j]-job_priority_duedate[j][1]
@@ -324,17 +323,17 @@ for i in range(population_size):
                 job_tardiness=0
                 job_earliness=0
                 d_record[j]=[job_earliness,job_tardiness]
-        
+
         twet=sum((1/job_priority_duedate[j][0])*d_record[j][0]+job_priority_duedate[j][0]*d_record[j][1] for j in j_keys)
         makespan=max(j_count.values())
         chroms_obj_record[m]=[twet,makespan]
 ```
-### :arrow_down_small: 非凌越排序計算  <br>
+### :arrow_down_small: Non-atom sort calculation  <br>
 ```python
     '''-------non-dominated sorting-------'''      
     front=non_dominated_sorting(population_size,chroms_obj_record
 ```
-### :arrow_down_small: 選擇  <br>
+### :arrow_down_small: Choose  <br>
 
 ```python
     '''----------selection----------'''
@@ -342,8 +341,8 @@ for i in range(population_size):
     new_pop_obj=[chroms_obj_record[k] for k in new_pop]
 ```
 
-### :arrow_down_small: 比較 <br>
-將此輪找到最好的那些解，與目前為止迭代中找到得最好的解進行比較
+### :arrow_down_small: Comparison <br>
+Find the best solutions for this round and compare them with the best solutions found in the iteration so far
 ```
     '''----------comparison----------'''
 	if n==0:
@@ -352,14 +351,14 @@ for i in range(population_size):
     else:            
         total_list=copy.deepcopy(population_list)+copy.deepcopy(best_list)
         total_obj=copy.deepcopy(new_pop_obj)+copy.deepcopy(best_obj)
-        
+
         now_best_front=non_dominated_sorting(population_size,total_obj)
         best_list,best_pop=selection(population_size,now_best_front,total_obj,total_list)
         best_obj=[total_obj[k] for k in best_pop]
 ```
 
-### :arrow_down_small: 結果 <br>
-最終會輸出在所有迭代過程中找到最好的解，由於這是多目標問題，所以可能會有多組解，這邊的設定是，輸出與族群大小相同數量的解
+### :arrow_down_small: Results <br>
+Eventually the output will be found in all iterations to find the best solution, because this is a multi-objective problem, so there may be multiple sets of solutions, this side of the setting is that the output and the size of the population of the same number of solutions
 ```python
 '''----------result----------'''
 print(best_list)
