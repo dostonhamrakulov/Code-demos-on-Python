@@ -7,7 +7,7 @@ This topic focuses on how to solve the Job Shop scheduling problem through the G
 |Update time|Article|
 |---|---|
 |2018|[Genetic Algorithm (GA)](https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/GA/GA.md )|
-|2018|[Nondominated Sorting Genetic Algorithm II (NSGA-II)](httphttps://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II/NSGA-II.md )|
+|2018|[Nondominated Sorting Genetic Algorithm II (NSGA-II)](https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II/NSGA-II.md )|
 ## § Implementation with Python
 
 |Update time|Article|Link|
