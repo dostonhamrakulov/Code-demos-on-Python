@@ -1,4 +1,5 @@
-
+### Implementation folder
+Here, go to an other algorithm's implementation from this directory
 
 # Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II
 This topic focuses on how to solve the Job Shop scheduling problem through the Genetic Algorithm (GA) and the Nondominated Sorting Genetic Algorithm II (NSGA-II). At first, we will introduce the concept of GA and NSGA-II first, and finally implement and explain through Python.
