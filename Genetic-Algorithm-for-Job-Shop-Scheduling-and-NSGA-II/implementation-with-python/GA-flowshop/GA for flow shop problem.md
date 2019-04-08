@@ -14,7 +14,7 @@ To put it simply, the flow shop problem is that there are n workpieces and m mac
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/picture/1 .png" width="450" ​​height="180">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/GA-flowshop/picture/1 .png" width="450" ​​height="180">
 </div>
 <br>
 
@@ -23,7 +23,7 @@ Job 1->Job 2->Job 3, so you can get the Gantt chart as shown in the lower right 
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/picture/2 .png" width="570" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/GA-flowshop/picture/2 .png" width="570" height="250">
 </div>
 <br>
 
@@ -32,7 +32,7 @@ This example is a single-machine flow shop problem with 20 workpieces. The sched
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/picture/3 .png" width="650" height="180">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/GA-flowshop/picture/3 .png" width="650" height="180">
 </div>
 <br>
 
@@ -49,7 +49,7 @@ w<sub>i</sup></sub>: Weight of artifact i >
 
 - Calculate the sum of the weighted delay times of all the workpieces. From the formula we can know that when the weight of the workpiece is larger, we should complete those workpieces with larger weights as soon as possible, otherwise the total weighted delay time will be too large. In terms of scheduling goals, this is not a good schedule.
 
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/picture/4 .png" width="80" height="60">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/GA-flowshop/picture/4 .png" width="80" height="60">
 
 In addition, there is another version of the flow shop program. The main difference with this article is the difference in the solution target. The other version aims to minimize the total idle time (Idle time), which is the example Gantt chart above. The part of the gray area, which is expected to be discharged, can minimize the idle time of the main machine.
 
@@ -241,7 +241,7 @@ This method is to mutate by means of gene displacement, and the mutation method 
 3. Perform gene transfer and transfer as shown.
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/picture/6 .png" width="450" ​​height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/GA-flowshop/picture/6 .png" width="450" ​​height="250">
 </div>
 <br>
 

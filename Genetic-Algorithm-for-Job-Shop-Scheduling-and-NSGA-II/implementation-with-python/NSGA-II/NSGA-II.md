@@ -10,7 +10,7 @@ This example is a 10x10 Jop shop problem, a total of 10 workpieces and 10 sets o
 - Processing time  
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/picture/1.png" width="650" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/NSGA-II/picture/1.png" width="650" height="300">
 </div>
 <br>
 <br>
@@ -18,14 +18,14 @@ This example is a 10x10 Jop shop problem, a total of 10 workpieces and 10 sets o
 - Machine sequence
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/picture/2.png" width="650" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/NSGA-II/picture/2.png" width="650" height="300">
 </div>
 <br>
 
 -  Priority and Due date
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/picture/3.png" width="200" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/NSGA-II/picture/3.png" width="200" height="300">
 </div>
 <br>
 
@@ -45,13 +45,13 @@ O<sub>ijk</sup></sub>  Indicates that the workpiece I uses the K machine in the 
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-jobshop/picture/5.png" width="780" height="420">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/GA-jobshop/picture/5.png" width="780" height="420">
 </div>
 <br>
 
 ## :black_nib: Description of the program <br>
 
-Here mainly for a few important blocks in the program to explain, some details are not put in, if necessary please refer to [Complete program code](https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/NSGA-II%20code.py)Or[Sample Archive](https://wurmen.github.io/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/Example_NSGAII.html)<br>
+Here mainly for a few important blocks in the program to explain, some details are not put in, if necessary please refer to [Complete program code](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/NSGA-II/NSGA-II%20code.py)Or[Sample Archive](https://wurmen.github.io/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/NSGA-II/Example_NSGAII.html)<br>
 
 :bulb:As the following procedures have three main functions, it is recommended that you can self-print function input and output values to facilitate the execution of the function of the solution  
 
@@ -259,13 +259,13 @@ This example is a Job shop problem with 10 x 10，As a result, each workpiece ap
 ```
 ### :arrow_down_small: Mutation <br>
 
-The Mutant method used here [Flow shop](https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/GA%20for%20flow%20shop%20problem.md) The same example is the mutation through the way of gene displacement, which is mutated in the following ways:<br>1. According to mutation selection rate determines how many percentages of genes in chromosomes are mutated, assuming that each chromosome has six genes and mutation selection rate 0.5, 3 genes are mutated.
+The Mutant method used here [Flow shop](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/GA-flowshop/GA%20for%20flow%20shop%20problem.md) The same example is the mutation through the way of gene displacement, which is mutated in the following ways:<br>1. According to mutation selection rate determines how many percentages of genes in chromosomes are mutated, assuming that each chromosome has six genes and mutation selection rate 0.5, 3 genes are mutated.
 
 2. Randomly select the gene to be displaced, assuming that 5, 2, 6 are selected (in this case, the gene at that position is mutated)
 3. Gene transfer, the way of transfer as shown in the figure.
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop/picture/6.png" width="450" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation-with-python/GA-flowshop/picture/6.png" width="450" height="250">
 </div>
 <br>
 
