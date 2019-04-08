@@ -13,7 +13,7 @@ The biggest difference between the Jop shop problem and the Flow shop problem is
 This is a 3x3 Job shop problem
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/1 .png" width="650" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/1.png" width="650" height="250">
 </div>
 <br>
 
@@ -23,7 +23,7 @@ This example is a 10x10 Job shop problem with 10 workpieces and 10 machines. Eac
 - Processing time
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/2 .png" width="650" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/2.png" width="650" height="300">
 </div>
 <br>
 <br>
@@ -31,7 +31,7 @@ This example is a 10x10 Job shop problem with 10 workpieces and 10 machines. Eac
 - Machine sequence
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/3 .png" width="650" height="300">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/3.png" width="650" height="300">
 </div>
 <br>
 
@@ -40,7 +40,7 @@ The goal of this example is to minimize the total completion time (Makespan), th
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/4 .png" width="450" ​​height="180">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/4.png" width="450" ​​height="180">
 </div>
 <br>
 
@@ -55,7 +55,7 @@ O<sub>ijk</sup></sub> means the workpiece i uses the kth machine in the job prog
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/5 .png" width="780" height="420">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/5.png" width="780" height="420">
 </div>
 <br>
 
@@ -156,7 +156,7 @@ This example is a 10 x 10 Job shop problem, so each artifact appears on the chro
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/7 .png" width="450" ​​height="285">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/7.png" width="450" ​​height="285">
 </div>
 <br>
 
@@ -192,13 +192,13 @@ This example is a 10 x 10 Job shop problem, so each artifact appears on the chro
 ```
 ### :arrow_down_small: Mutant <br>
 
-The mutation method used here is [Flow shop] (https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA The same example of -flowshop/GA%20for%20flow%20shop%20problem.md) is a mutation by means of gene displacement. The mutation method is as follows:<br>
+The mutation method used here is [Flow shop] (https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/implementation%20with%20python/GA-flowshop) The same example of -flowshop/GA%20for%20flow%20shop%20problem.md) is a mutation by means of gene displacement. The mutation method is as follows:<br>
 1. According to the mutation selection rate, determine how many genes in the chromosome are to be mutated. If there are six genes per chromosome and the mutation selection rate is 0.5, then 3 genes will be mutated.
 2. Randomly select the gene to be displaced, assuming 5, 2, 6 are selected (here, the gene at this position is to be mutated)
 3. Perform gene transfer and transfer as shown.
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6 .png" width="450" ​​height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-flowshop/picture/6.png" width="450" ​​height="250">
 </div>
 <br>
 
@@ -303,7 +303,7 @@ Print('the elapsed time:%s'% (time.time() - start_time))
 ```
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/8 .JPG" width="700" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/implementation%20with%20python/GA-jobshop/picture/8.JPG" width="700" height="350">
 </div>
 <br>
 
