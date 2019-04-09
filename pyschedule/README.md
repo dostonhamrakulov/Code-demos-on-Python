@@ -3,7 +3,7 @@
 ### Description:
 Example works done using pyschedule library
 
-
+**pyschedule** library can be found [here](https://github.com/timnon/pyschedule)
 
 
 ### Programming languages and frameworks
