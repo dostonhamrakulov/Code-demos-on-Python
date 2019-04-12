@@ -9,6 +9,8 @@ Working with different libraries in Python.
 2. [Downloading files from web in Python](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Downloading%20files%20from%20web%20in%20Python)
 3. [HTTP POST with storing data in Cookie and File](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/HTTP%20POST%20with%20storing%20data%20in%20Cookie%20and%20File)
 4. [Linux command in Python (script)](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Linux%20command%20in%20Python)
+5. [Matplotlib module example](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Matplotlib)
+6. [Panda module example](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Panda)
   * [Pre-Requisites](#pre-requisites)
   * [Solid Project Workflow](#solid-project-workflow)
 
