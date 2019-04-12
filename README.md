@@ -11,6 +11,8 @@ Working with different libraries in Python.
 4. [Linux command in Python (script)](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Linux%20command%20in%20Python)
 5. [Matplotlib module example](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Matplotlib)
 6. [Panda module example](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/Panda)
+7. [pyschedule external library](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/pyschedule)
+8. [QR Code generator in Python](https://github.com/dostonhamrakulov/Code-demos-on-Python/tree/master/QR%20Code%20generator%20in%20Python)
   * [Pre-Requisites](#pre-requisites)
   * [Solid Project Workflow](#solid-project-workflow)
 
