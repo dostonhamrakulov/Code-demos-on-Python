@@ -1,7 +1,5 @@
 # Genetic Algorithm (GA)
-*[POLab](http://polab.imis.ncku.edu.tw/)* <br>
-*[cheng-man wu](https://www.linkedin.com/in/chengmanwu)*<br>
-*2018/12/01*
+
 <br>
 
 ##: black_nib: GA Background (Background)
@@ -50,7 +48,7 @@ There are many ways to encode chromosomes. The most common encoding method is Bi
 </div>
 <br>
 
-We use [Wikipedia] (https://en.wikipedia.org/wiki/%E6%9F%93%E8%89%B2%E9%AB%94_(%E9%81%BA%E5%82%B3 %E6%BC%94%E7%AE%97%E6%B3%95)) The example given is a simple coding description:<br>
+We use [Wikipedia] (https://en.wikipedia.org/wiki/Chromosome_(genetic_algorithm)) The example given is a simple coding description:<br>
 
 **Example**<br>
 Suppose now that there is a problem to find an integer x between 0 and 255. This integer x should have the largest value of the function f(x)=x<sup>2</sup></sub> (of course this It's a very simple question, but here is a simple explanation, so don't worry too much about XD). <br>
