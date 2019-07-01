@@ -13,7 +13,7 @@ Let's take a simple example to illustrate this concept. Suppose there are four p
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II/NSGA-II/Picture/1.png" width="550" height="250">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II/Picture/1.png" width="550" height="250">
 </div>
 <br>
 
@@ -24,7 +24,7 @@ The architecture of NSGE-II is shown in the figure below. As mentioned in the in
 
 <br>
 <div align=center>
-<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/blob/master/introduction/NSGA-II/Picture/2.png" width="550" height="350">
+<img src="https://github.com/dostonhamrakulov/Code-demos-on-Python/blob/master/Genetic-Algorithm-for-Job-Shop-Scheduling-and-NSGA-II/introduction/NSGA-II/Picture/2.png" width="550" height="350">
 </div>
 <br>
 
